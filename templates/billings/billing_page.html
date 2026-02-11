@@ -1,0 +1,423 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Billing Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        margin: 0;
+        background: #f4f6f9;
+      }
+      .header {
+        text-align: center;
+        padding: 1px;
+        background: #007bff;
+        color: white;
+      }
+
+      /* ====== SIDEBAR ====== */
+      .sidebar {
+        width: 220px;
+        background: #111827;
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 20px;
+        letter-spacing: 1px;
+      }
+
+      .sidebar a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        text-decoration: none;
+        color: #d1d5db;
+        font-size: 15px;
+        transition: 0.3s;
+      }
+
+      .sidebar a i {
+        font-size: 18px;
+        width: 20px;
+        text-align: center;
+      }
+
+      .sidebar a:hover {
+        background: #1f2937;
+        color: #ffffff;
+        padding-left: 25px;
+      }
+
+      /* ====== MAIN CONTENT SHIFT ====== */
+      .main-content {
+        margin-left: 220px;
+      }
+
+      /* Responsive */
+      @media screen and (max-width: 900px) {
+        .sidebar {
+          width: 70px;
+        }
+
+        .sidebar h2 {
+          display: none;
+        }
+
+        .sidebar a span {
+          display: none;
+        }
+
+        .main-content {
+          margin-left: 70px;
+        }
+      }
+
+      /* Two Column Layout */
+      .container {
+        display: flex;
+        gap: 20px;
+        width: 95%;
+        margin: 20px auto;
+        align-items: flex-start; /* Keeps columns at the top */
+      }
+
+      /* Left Column: Products */
+      .products {
+        flex: 2;
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Right Column: Cart */
+      .cart {
+        flex: 1;
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        position: sticky; /* Keeps cart visible on scroll */
+        top: 20px;
+      }
+
+      .search-bar {
+        text-align: center;
+        margin: 10px;
+        width: 100%;
+      }
+
+      .search-bar input {
+        width: 60%;
+        max-width: 60%%;
+        padding: 10px 15px;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        outline: none;
+      }
+
+      .product-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        padding: 12px 0;
+      }
+
+      .low-stock {
+        color: red;
+        font-weight: bold;
+      }
+
+      .qty-controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .qty-controls button {
+        padding: 15px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        color: white;
+      }
+
+      .btn-minus {
+        background: #dc3545;
+      }
+
+      .btn-plus {
+        background: #28a745;
+      }
+
+      .qty-controls span {
+        min-width: 25px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .cart table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      .cart th,
+      .cart td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+      .cart th {
+        background: #f8f9fa;
+        color: #333;
+      }
+      .cart-footer {
+        margin-top: 15px;
+        text-align: right;
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #007bff;
+      }
+      .generate-bill {
+        margin-top: 15px;
+        width: 100%;
+        padding: 12px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      @media screen and (max-width: 900px) {
+        .container {
+          flex-direction: column;
+        }
+        .cart {
+          position: static;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .products {
+          width: 100%;
+          box-sizing: border-box;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>IceBay Billing</h1>
+    </div>
+
+    <div class="sidebar">
+      <a href="/">
+        <i class="fas fa-house"></i>
+        <span>Home</span>
+      </a>
+
+      <a href="{% url 'daily_reports' %}">
+        <i class="fas fa-chart-line"></i>
+        <span>Daily Sales</span>
+      </a>
+
+      <a href="{% url 'remaining_stock' %}">
+        <i class="fas fa-boxes-stacked"></i>
+        <span>Remaining Stock</span>
+      </a>
+
+      <a href="{% url 'finished_stocks' %}">
+        <i class="fas fa-circle-xmark"></i>
+        <span>Finished Stocks</span>
+      </a>
+    </div>
+    <div class="main-content">
+      <div class="search-bar">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search Product..."
+          onkeyup="filterProducts()"
+        />
+      </div>
+
+      <div class="container">
+        <div class="products" id="productList">
+          {% for product in products %}
+          <div class="product-item" data-name="{{ product.name|lower }}">
+            <div>
+              <strong style="font-size: 1.5rem; color: darkgreen"
+                >{{ product.name }}</strong
+              ><br />
+              <b style="font-size: 1.5rem">₹{{ product.price }}</b> |
+              <span class="stock" id="stock-{{ product.id }}">
+                {% if product.stock_quantity < 5 %}<span class="low-stock"
+                  >(Stock: {{ product.stock_quantity }})</span
+                >{% else %}(Stock: {{ product.stock_quantity }}){% endif %}
+              </span>
+            </div>
+            <div class="qty-controls">
+              <button class="btn-minus" onclick="decrease({{ product.id }})">
+                -
+              </button>
+              <span id="qty-{{ product.id }}">0</span>
+              {% if product.stock_quantity > 0 %}
+              <button
+                id="inc-btn-{{ product.id }}"
+                class="btn-plus"
+                onclick="increase({{ product.id }})"
+              >
+                +
+              </button>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="cart">
+          <h3 style="margin-top: 0">Active Bill</h3>
+          <table id="cartTable">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="cart-footer">
+            Total: ₹<span id="cartTotal">0.00</span>
+          </div>
+          <button class="generate-bill" onclick="generateBill()">
+            Generate Bill
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      const products = {
+          {% for product in products %}
+          "{{ product.id }}": {
+              "name": "{{ product.name }}",
+              "price": parseFloat("{{ product.price }}"),
+              "stock": parseInt("{{ product.stock_quantity }}")
+          }{% if not forloop.last %},{% endif %}
+          {% endfor %}
+      };
+
+      const cart = {};
+
+      document.addEventListener("DOMContentLoaded", function() {
+
+          function updateCart() {
+              const tbody = document.querySelector("#cartTable tbody");
+              tbody.innerHTML = '';
+              let total = 0;
+
+              for (const id in cart) {
+                  const qty = cart[id];
+                  if (qty > 0) {
+                      const product = products[id];
+                      const row = document.createElement("tr");
+                      row.innerHTML = `<td>${product.name}</td><td>${qty}</td><td>₹${(qty * product.price).toFixed(2)}</td>`;
+                      tbody.appendChild(row);
+                      total += qty * product.price;
+                  }
+              }
+              document.getElementById("cartTotal").innerText = total.toFixed(2);
+          }
+
+          window.increase = function(id) {
+              const qtyEl = document.getElementById(`qty-${id}`);
+              const stockEl = document.getElementById(`stock-${id}`);
+              const incBtn = document.getElementById(`inc-btn-${id}`);
+
+              if (!cart[id]) cart[id] = 0;
+
+              if (cart[id] >= products[id].stock) {
+                  alert("Stock limit reached!");
+                  return;
+              }
+
+              cart[id]++;
+              products[id].stock--;
+              qtyEl.innerText = cart[id];
+              stockEl.innerText = `(Stock: ${products[id].stock})`;
+
+              if (products[id].stock === 0 && incBtn) incBtn.style.display = 'none';
+              updateCart();
+          }
+
+          window.decrease = function(id) {
+              const qtyEl = document.getElementById(`qty-${id}`);
+              const stockEl = document.getElementById(`stock-${id}`);
+              const incBtn = document.getElementById(`inc-btn-${id}`);
+
+              if (!cart[id] || cart[id] <= 0) return;
+
+              cart[id]--;
+              products[id].stock++;
+              qtyEl.innerText = cart[id];
+              stockEl.innerText = `(Stock: ${products[id].stock})`;
+
+              if (products[id].stock > 0 && incBtn) incBtn.style.display = 'inline-block';
+              updateCart();
+          }
+
+          window.generateBill = function() {
+              const cartData = [];
+              for (const id in cart) if (cart[id] > 0) cartData.push({ product_id: id, qty: cart[id] });
+
+              if (cartData.length === 0) { alert("Cart is empty!"); return; }
+
+              fetch("{% url 'create_bill_api' %}", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json", "X-CSRFToken": "{{ csrf_token }}" },
+                  body: JSON.stringify({ cart: cartData })
+              })
+              .then(res => res.json())
+              .then(data => {
+                  if (data.success) {
+                      alert(`Success!\nBill No: ${data.bill_no}\nTotal: ₹${data.total_amount}`);
+                      window.location.reload();
+                  } else alert("Error: " + data.error);
+              });
+          }
+      });
+
+      function filterProducts() {
+          const input = document.getElementById("searchInput").value.toLowerCase();
+          document.querySelectorAll(".product-item").forEach(item => {
+              const name = item.getAttribute("data-name");
+              item.style.display = name.includes(input) ? "flex" : "none";
+          });
+      }
+    </script>
+  </body>
+</html>

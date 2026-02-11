@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{ page_title|default:"Stock Report" }}</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #f2f4f8;
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #fff;
+    padding: 22px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+/* CARD */
+.card {
+    max-width: 1000px;
+    margin: 35px auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 12px 28px rgba(0,0,0,.08);
+    padding: 25px;
+}
+
+/* TOP ACTION BAR */
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.actions input, .actions button {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.actions input:focus {
+    outline: none;
+    border-color: #0d6efd;
+}
+
+.actions button {
+    background: #0d6efd;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    background: #0b5ed7;
+}
+
+/* LOW STOCK ALERT */
+.alert {
+    background: #fff3cd;
+    color: #856404;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f8f9fa;
+}
+
+th, td {
+    padding: 14px;
+    text-align: left;
+}
+
+th {
+    font-weight: 600;
+    color: #444;
+}
+
+tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: transform .2s, box-shadow .2s;
+}
+
+tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,.08);
+}
+
+/* BADGES */
+.badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.good {
+    background: #e6f4ea;
+    color: #1e7e34;
+}
+
+.low {
+    background: #fdecea;
+    color: #b02a37;
+}
+
+/* TOTAL */
+.total-row {
+    background: #f1f1f1;
+    font-weight: 700;
+    font-size: 17px;
+}
+
+/* BACK */
+.back-link {
+    display: inline-block;
+    margin-bottom: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+/* MOBILE CARD VIEW */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody tr {
+        background: #fff;
+        margin-bottom: 16px;
+        border-radius: 12px;
+        padding: 14px;
+        box-shadow: 0 10px 24px rgba(0,0,0,.1);
+    }
+
+    tbody tr:hover {
+        transform: none;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #555;
+    }
+    .critical {
+    background: #ffebee;
+    color: #b71c1c;
+    animation: glow 1.2s infinite alternate;
+    }
+
+    @keyframes glow {
+        from { box-shadow: 0 0 6px rgba(255,0,0,.4); }
+        to   { box-shadow: 0 0 16px rgba(255,0,0,.9); }
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    {{ page_title|default:"Stock Report" }}
+</div>
+
+<div class="card">
+
+    <a href="/" class="back-link">← Back to Home</a>
+
+    <!-- SEARCH & FILTER -->
+    <form method="get" class="actions">
+        <input type="text" id="searchInput" placeholder="🔍 Search product..." class="search-box">
+        <input type="date" name="from" value="{{ request.GET.from }}">
+        <input type="date" name="to" value="{{ request.GET.to }}">
+        <button type="submit">Filter</button>
+    </form>
+
+    <!-- LOW STOCK WARNING -->
+    {% if stocks %}
+        {% with low_count=0 %}
+        {% for s in stocks %}
+            {% if s.quantity <= 10 %}
+                {% widthratio 1 1 1 as low_count %}
+            {% endif %}
+        {% endfor %}
+        {% endwith %}
+    {% endif %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Stock</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock in stocks %}
+        <tr class="stock-row" data-name="{{ stock.product.name|lower }}">
+            <td data-label="#"> {{ forloop.counter }} </td>
+
+            <td data-label="Product">
+                {{ stock.product.name }}
+            </td>
+
+            <td data-label="Stock">
+                {% if stock.quantity <= 5 %}
+                    <span class="badge critical">🔥 {{ stock.quantity }}</span>
+                {% elif stock.quantity <= 10 %}
+                    <span class="badge low">⚠ {{ stock.quantity }}</span>
+                {% else %}
+                    <span class="badge good">✔ {{ stock.quantity }}</span>
+                {% endif %}
+            </td>
+
+            <td data-label="Price">
+                ₹ {{ stock.product.price }}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No records found</td>
+        </tr>
+        {% endfor %}
+
+        <tr class="total-row">
+            <td colspan="4" style="text-align:right">
+                Total Products: {{ stocks|length }}
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+<script>
+function searchStock() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const rows = document.querySelectorAll(".stock-row");
+
+    rows.forEach(row => {
+        const name = row.dataset.name;
+        row.style.display = name.includes(input) ? "" : "none";
+    });
+}
+
+document.getElementById("searchInput").addEventListener("keyup", searchStock);
+</script>
+
+</body>
+</html>
