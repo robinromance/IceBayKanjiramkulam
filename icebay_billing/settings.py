@@ -28,8 +28,7 @@ SECRET_KEY = os.environ.get("'django-insecure-@ls++5rs14=mw11w6v&#bh$4s(kqoxqdqr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['icebaykanjiramkulam.onrender.com']
 
 # Application definition
 
