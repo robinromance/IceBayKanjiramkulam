@@ -3,6 +3,8 @@
 <html>
 <head>
     <title>Daily Sales Detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -10,7 +12,7 @@
             margin: 0;
             font-size: 16px;
         }
-        
+
         /* HEADER */
         .header {
             text-align: center;
@@ -21,7 +23,7 @@
             font-weight: 700;
             letter-spacing: 0.5px;
         }
-        
+
         /* CONTAINER */
         .container {
             width: 95%;
@@ -32,7 +34,7 @@
             border-radius: 16px;
             box-shadow: 0 6px 18px rgba(0,0,0,0.08);
         }
-        
+
         /* BACK BUTTON */
         .back-btn {
             text-decoration: none;
@@ -42,50 +44,50 @@
             margin-bottom: 18px;
             font-size: 15px;
         }
-        
+
         /* DESKTOP TABLE */
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         th, td {
             padding: 14px;
             text-align: left;
             border-bottom: 1px solid #eee;
             font-size: 16px;
         }
-        
+
         th {
             background: #f8f9fa;
             font-weight: 700;
         }
-        
+
         .footer-row {
             background: #f1f3f5;
             font-weight: bold;
             font-size: 17px;
         }
-        
+
         /* MOBILE CARD LAYOUT */
         .mobile-card {
             display: none;
         }
-        
+
         @media (max-width: 768px) {
-        
+
             body {
                 font-size: 17px;
             }
-        
+
             table {
                 display: none;
             }
-        
+
             .mobile-card {
                 display: block;
             }
-        
+
             .sale-item {
                 background: #ffffff;
                 border-radius: 16px;
@@ -95,30 +97,30 @@
                 border-left: 6px solid #007BFF;
                 transition: transform 0.2s ease;
             }
-        
+
             .sale-item:active {
                 transform: scale(0.98);
             }
-        
+
             .sale-title {
                 font-weight: 700;
                 font-size: 18px;
                 margin-bottom: 10px;
                 color: #222;
             }
-        
+
             .sale-details {
                 display: flex;
                 justify-content: space-between;
                 font-size: 16px;
                 color: #444;
             }
-        
+
             .sale-details span:last-child {
                 font-weight: 700;
                 color: #007BFF;
             }
-        
+
             .grand-total-box {
                 margin-top: 20px;
                 padding: 18px;
@@ -131,18 +133,18 @@
                 box-shadow: 0 6px 20px rgba(0,0,0,0.2);
             }
         }
-
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>Sales Report - {{ today|date:"d M Y" }}</h1>
+    Sales Report - {{ today|date:"d M Y" }}
 </div>
 
 <div class="container">
     <a href="{% url 'billing_page' %}" class="back-btn">← Back to Billing</a>
 
+    <!-- Desktop Table -->
     <table>
         <thead>
             <tr>
@@ -173,6 +175,28 @@
             </tr>
         </tfoot>
     </table>
+
+    <!-- Mobile Cards -->
+    <div class="mobile-card">
+        {% for item in product_sales %}
+        <div class="sale-item">
+            <div class="sale-title">
+                {{ forloop.counter }}. {{ item.product__name }}
+            </div>
+            <div class="sale-details">
+                <span>Qty: {{ item.total_qty }}</span>
+                <span>₹{{ item.total_price|floatformat:2 }}</span>
+            </div>
+        </div>
+        {% empty %}
+        <p style="text-align:center;">No products sold today.</p>
+        {% endfor %}
+
+        <div class="grand-total-box">
+            Grand Total: ₹{{ grand_total }}
+        </div>
+    </div>
+
 </div>
 
 </body>
