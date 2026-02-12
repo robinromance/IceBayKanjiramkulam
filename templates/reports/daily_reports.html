@@ -4,14 +4,134 @@
 <head>
     <title>Daily Sales Detail</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; }
-        .header { text-align: center; padding: 20px; background: #007BFF; color: white; }
-        .container { width: 90%; max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
-        th { background: #f8f9fa; color: #333; }
-        .footer-row { background: #eee; font-weight: bold; font-size: 1.2em; }
-        .back-btn { text-decoration: none; color: #007BFF; font-weight: bold; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        /* HEADER */
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        /* CONTAINER */
+        .container {
+            width: 95%;
+            max-width: 900px;
+            margin: 15px auto;
+            background: white;
+            padding: 18px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+        
+        /* BACK BUTTON */
+        .back-btn {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 18px;
+            font-size: 15px;
+        }
+        
+        /* DESKTOP TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 700;
+        }
+        
+        .footer-row {
+            background: #f1f3f5;
+            font-weight: bold;
+            font-size: 17px;
+        }
+        
+        /* MOBILE CARD LAYOUT */
+        .mobile-card {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+        
+            body {
+                font-size: 17px;
+            }
+        
+            table {
+                display: none;
+            }
+        
+            .mobile-card {
+                display: block;
+            }
+        
+            .sale-item {
+                background: #ffffff;
+                border-radius: 16px;
+                padding: 18px;
+                margin-bottom: 16px;
+                box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+                border-left: 6px solid #007BFF;
+                transition: transform 0.2s ease;
+            }
+        
+            .sale-item:active {
+                transform: scale(0.98);
+            }
+        
+            .sale-title {
+                font-weight: 700;
+                font-size: 18px;
+                margin-bottom: 10px;
+                color: #222;
+            }
+        
+            .sale-details {
+                display: flex;
+                justify-content: space-between;
+                font-size: 16px;
+                color: #444;
+            }
+        
+            .sale-details span:last-child {
+                font-weight: 700;
+                color: #007BFF;
+            }
+        
+            .grand-total-box {
+                margin-top: 20px;
+                padding: 18px;
+                background: linear-gradient(135deg, #007BFF, #0056b3);
+                color: white;
+                border-radius: 16px;
+                text-align: center;
+                font-size: 20px;
+                font-weight: 700;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            }
+        }
+
     </style>
 </head>
 <body>
