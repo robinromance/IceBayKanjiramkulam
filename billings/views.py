@@ -1,131 +1,248 @@
-from django.shortcuts import render
-from django.db import transaction
-from django.utils import timezone
 from decimal import Decimal
 import json
+
+from django.db import transaction
+from django.db.models import F, Sum
+from django.db.models.functions import Coalesce
 from django.http import JsonResponse
+from django.shortcuts import render
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
 from products.models import Product
 from stocks.models import Stock, StockEntry
 from billings.models import Bill, BillItem
 from reports.models import DailyReport, DailyProductReport
-from django.db.models import F, Sum
-from django.db.models.functions import Coalesce
-from products.models import Product
-from stocks.models import Stock
 
-def remaining_stock(request):
-    # Show products with stock > 0
-    products_in_stock = Product.objects.filter(stock__quantity__gt=0)
-    return render(request, "billings/remaining_stock.html", {"products": products_in_stock})
 
-def finished_stocks(request):
-    # Show products with stock = 0
-    finished_products = Product.objects.filter(stock__quantity=0)
-    return render(request, "billings/finished_stocks.html", {"products": finished_products})
+# =====================================================
+# BILLING PAGE
+# =====================================================
 
 def billing_page(request):
-    """
-    Display all products for billing page.
-    - Annotates each product with current stock quantity.
-    - Calculates total sold quantity from BillItem.
-    - Orders products by most-selling first.
-    """
+
     products = Product.objects.annotate(
         stock_quantity=F("stock__quantity"),
-        total_sold=Coalesce(Sum("billitem__quantity"), 0)  # 0 if no sales yet
-    ).order_by("-total_sold", "name")  # most-selling first, then alphabetically
+        total_sold=Coalesce(Sum("bill_items__quantity"), 0)
+    ).order_by("-total_sold", "name")
 
-    context = {
-        "products": products
-    }
+    return render(
+        request,
+        "billings/billing_page.html",
+        {
+            "products": products
+        }
+    )
 
-    return render(request, "billings/billing_page.html", context)
 
+# =====================================================
+# REMAINING STOCK PAGE
+# =====================================================
+
+def remaining_stock(request):
+
+    products = Product.objects.filter(
+        stock__quantity__gt=0
+    )
+
+    return render(
+        request,
+        "billings/remaining_stock.html",
+        {
+            "products": products
+        }
+    )
+
+
+# =====================================================
+# FINISHED STOCK PAGE
+# =====================================================
+
+def finished_stocks(request):
+
+    products = Product.objects.filter(
+        stock__quantity=0
+    )
+
+    return render(
+        request,
+        "billings/finished_stocks.html",
+        {
+            "products": products
+        }
+    )
+
+
+# =====================================================
+# REDUCE STOCK
+# =====================================================
 
 def reduce_stock(product, qty, bill):
+
     stock = Stock.objects.get(product=product)
 
+    qty = int(qty)
+
+    if qty <= 0:
+
+        raise Exception(
+            "Invalid quantity"
+        )
+
     if stock.quantity < qty:
-        raise Exception(f"Not enough stock for {product.name}")
+
+        raise Exception(
+            f"Only {stock.quantity} stock left for {product.name}"
+        )
 
     stock.quantity -= qty
+
     stock.save()
 
     StockEntry.objects.create(
+
         product=product,
+
         entry_type="SALE",
+
         quantity=qty,
+
         note=f"Bill No: {bill.bill_no}"
+
     )
+
+# =====================================================
+# CREATE BILL
+# =====================================================
 
 @transaction.atomic
 def create_bill(cart_data):
 
+    # CREATE MAIN BILL
     bill = Bill.objects.create(
         bill_no=f"BILL-{Bill.objects.count() + 1}",
         total_amount=0
     )
 
-    total_amount = Decimal("0.00")
+    grand_total = Decimal("0.00")
+
     today = timezone.now().date()
 
-    daily_report, _ = DailyReport.objects.get_or_create(date=today)
+    # DAILY REPORT
+    daily_report, _ = DailyReport.objects.get_or_create(
+        date=today
+    )
+
+    # ============================================
+    # LOOP THROUGH CART ITEMS
+    # ============================================
 
     for item in cart_data:
-        product = Product.objects.get(id=item["product_id"])
+
+        product = Product.objects.get(
+            id=item["product_id"]
+        )
+
         qty = int(item["qty"])
 
-        # ✅ CREATE BILL ITEM
+        line_total = product.price * qty
+
+        # =====================================
+        # CREATE BILL ITEM
+        # =====================================
+
         BillItem.objects.create(
             bill=bill,
             product=product,
             quantity=qty,
-            price=product.price
+            price=product.price,
+            total=line_total
         )
 
-        # ✅ REDUCE STOCK
+        # =====================================
+        # REDUCE STOCK
+        # =====================================
+
         reduce_stock(product, qty, bill)
 
-        # ✅ DAILY PRODUCT REPORT
+        # =====================================
+        # DAILY PRODUCT REPORT
+        # =====================================
+
         daily_product, _ = DailyProductReport.objects.get_or_create(
             date=today,
             product=product
         )
 
         daily_product.quantity_sold += qty
-        daily_product.total_sales += product.price * qty
+        daily_product.total_sales += line_total
         daily_product.save()
 
-        # ✅ DAILY TOTAL REPORT
+        # =====================================
+        # DAILY TOTAL REPORT
+        # =====================================
+
         daily_report.total_items_sold += qty
-        daily_report.total_sales += product.price * qty
+        daily_report.total_sales += line_total
 
-        total_amount += product.price * qty
+        grand_total += line_total
 
+    # SAVE DAILY REPORT
     daily_report.save()
 
-    bill.total_amount = total_amount
+    # UPDATE BILL TOTAL
+    bill.total_amount = grand_total
     bill.save()
 
     return bill
 
+
+# =====================================================
+# CREATE BILL API
+# =====================================================
+
 @csrf_exempt
 def create_bill_api(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            cart_data = data.get("cart", [])
-            if not cart_data:
-                return JsonResponse({"success": False, "error": "Cart is empty"})
 
-            bill = create_bill(cart_data)
+    if request.method != "POST":
+
+        return JsonResponse({
+            "success": False,
+            "error": "Invalid request method"
+        })
+
+    try:
+
+        data = json.loads(request.body)
+
+        cart_data = data.get("cart", [])
+
+        if not cart_data:
+
             return JsonResponse({
-                "success": True,
-                "bill_no": bill.bill_no,
-                "total_amount": str(bill.total_amount)
+                "success": False,
+                "error": "Cart is empty"
             })
-        except Exception as e:
-            return JsonResponse({"success": False, "error": str(e)})
-    return JsonResponse({"success": False, "error": "Invalid request method"})
+
+        bill = create_bill(cart_data)
+
+        return JsonResponse({
+
+            "success": True,
+
+            "bill_id": bill.id,
+
+            "bill_no": bill.bill_no,
+
+            "total_amount": str(
+                bill.total_amount
+            )
+
+        })
+
+    except Exception as e:
+
+        return JsonResponse({
+            "success": False,
+            "error": str(e)
+        })

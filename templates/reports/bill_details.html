@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bill Details</title>
+
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background: #f4f6f9;
+            padding: 2rem;
+        }
+
+        .bill-container{
+
+            max-width: 900px;
+
+            margin: auto;
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 2rem;
+
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+
+        }
+
+        .top-section{
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 2rem;
+
+            border-bottom: 2px solid #eee;
+
+            padding-bottom: 1rem;
+
+        }
+
+        .shop-name{
+
+            font-size: 2rem;
+
+            color: #2d3436;
+
+            font-weight: bold;
+
+        }
+
+        .bill-info h3{
+
+            margin-bottom: .5rem;
+
+            color: #555;
+
+        }
+
+        .bill-info span{
+
+            color: #000;
+
+            font-weight: bold;
+
+        }
+
+        table{
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 1rem;
+
+        }
+
+        table thead{
+
+            background: #0984e3;
+
+            color: white;
+
+        }
+
+        table th{
+
+            padding: 1rem;
+
+            font-size: 1rem;
+
+        }
+
+        table td{
+
+            padding: 1rem;
+
+            text-align: center;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+        table tbody tr:hover{
+
+            background: #f8f9fa;
+
+        }
+
+        .total-section{
+
+            margin-top: 2rem;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+        }
+
+        .total-box{
+
+            background: #00b894;
+
+            color: white;
+
+            padding: 1rem 2rem;
+
+            border-radius: 10px;
+
+            font-size: 1.5rem;
+
+            font-weight: bold;
+
+        }
+
+        .back-btn{
+
+            display: inline-block;
+
+            margin-top: 2rem;
+
+            text-decoration: none;
+
+            background: #2d3436;
+
+            color: white;
+
+            padding: .8rem 1.5rem;
+
+            border-radius: 8px;
+
+            transition: .3s;
+
+        }
+
+        .back-btn:hover{
+
+            background: #000;
+
+        }
+
+        @media(max-width:768px){
+
+            .top-section{
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 1rem;
+
+            }
+
+            table th,
+            table td{
+
+                padding: .7rem;
+
+                font-size: .9rem;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="bill-container">
+
+        <div class="top-section">
+
+            <div>
+
+                <h1 class="shop-name">
+                    ICE BAY
+                </h1>
+
+                <p>
+                    Professional Billing System
+                </p>
+
+            </div>
+
+            <div class="bill-info">
+
+                <h3>
+                    Bill No:
+                    <span>
+                        {{ bill.bill_no }}
+                    </span>
+                </h3>
+
+                <h3>
+                    Date:
+                    <span>
+                        {{ bill.created_at }}
+                    </span>
+                </h3>
+
+            </div>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Product</th>
+
+                    <th>Quantity</th>
+
+                    <th>Price</th>
+
+                    <th>Total</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in items %}
+
+                <tr>
+
+                    <td>
+                        {{ item.product.name }}
+                    </td>
+
+                    <td>
+                        {{ item.quantity }}
+                    </td>
+
+                    <td>
+                        ₹{{ item.price }}
+                    </td>
+
+                    <td>
+                        ₹{{ item.total }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <div class="total-section">
+
+            <div class="total-box">
+
+                Grand Total:
+                ₹{{ bill.total_amount }}
+
+            </div>
+
+        </div>
+
+        <a href="{% url 'daily_reports' %}" class="back-btn">
+
+            ← Back to Reports
+
+        </a>
+
+    </div>
+
+</body>
+</html>

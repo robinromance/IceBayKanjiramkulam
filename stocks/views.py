@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Stock, StockEntry
 from products.models import Product
 from django.db.models import Sum
+from django.contrib import messages
+from django.db.models import F
 
 def stock_list(request):
     stocks = Stock.objects.select_related("product").all()
@@ -10,7 +12,7 @@ def stock_list(request):
         "stocks": stocks
     })
 
-from django.db.models import F
+
 
 def remaining_stock(request):
     stocks = (
@@ -25,6 +27,51 @@ def remaining_stock(request):
         "page_title": "Remaining Stock"
     })
 
+
+# =========================================
+# ADD STOCK PAGE
+# =========================================
+
+def add_stock_page(request):
+    if request.method == "POST":
+        product_id = request.POST.get("product")
+        quantity = int(request.POST.get("quantity"))
+        entry_type = request.POST.get("entry_type")
+        note = request.POST.get("note")
+
+        product = Product.objects.get(id=product_id)
+
+        # GET OR CREATE STOCK
+        stock, created = Stock.objects.get_or_create(
+            product=product
+        )
+
+        # ADD STOCK
+        stock.quantity += quantity
+        stock.save()
+
+        # SAVE ENTRY HISTORY
+        StockEntry.objects.create(
+            product=product,
+            entry_type=entry_type,
+            quantity=quantity,
+            note=note
+        )
+
+        messages.success(
+            request,
+            f"{quantity} stock added to {product.name}"
+        )
+        return redirect("add_stock_page")
+
+    products = Product.objects.all().order_by("name")
+    return render(
+        request,
+        "stocks/add_stock.html",
+        {
+            "products": products
+        }
+    )
 
 # View for items that are OUT of stock
 def finished_stocks(request):
@@ -92,4 +139,3 @@ def add_purchase_stock(product, qty, supplier_name=""):
         quantity=qty,
         note=f"Supplier: {supplier_name}"
     )
-

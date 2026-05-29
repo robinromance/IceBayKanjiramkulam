@@ -1,0 +1,528 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ICE BAY | Add Stock</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Segoe UI',sans-serif;
+
+            background:#f3f6fb;
+
+            min-height:100vh;
+        }
+
+        /* ===================================
+                HEADER
+        =================================== */
+
+        .topbar{
+
+            width:100%;
+
+            padding:18px 25px;
+
+            background:
+            linear-gradient(
+                135deg,
+                #007bff,
+                #00c6ff
+            );
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            color:white;
+
+            box-shadow:
+            0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .topbar h1{
+
+            font-size:28px;
+
+            letter-spacing:1px;
+        }
+
+        .home-btn{
+
+            background:white;
+
+            color:#007bff;
+
+            text-decoration:none;
+
+            padding:12px 18px;
+
+            border-radius:12px;
+
+            font-weight:700;
+
+            display:flex;
+
+            align-items:center;
+
+            gap:10px;
+
+            transition:.3s;
+        }
+
+        .home-btn:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:
+            0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        /* ===================================
+                CONTAINER
+        =================================== */
+
+        .wrapper{
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            padding:40px 20px;
+        }
+
+        .card{
+
+            width:100%;
+
+            max-width:750px;
+
+            background:white;
+
+            border-radius:24px;
+
+            padding:35px;
+
+            box-shadow:
+            0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .card-header{
+
+            text-align:center;
+
+            margin-bottom:30px;
+        }
+
+        .card-header h2{
+
+            font-size:32px;
+
+            color:#111827;
+
+            margin-bottom:10px;
+        }
+
+        .card-header p{
+
+            color:#6b7280;
+
+            font-size:15px;
+        }
+
+        /* ===================================
+                FORM
+        =================================== */
+
+        .form-group{
+
+            margin-bottom:22px;
+        }
+
+        .form-group label{
+
+            display:block;
+
+            margin-bottom:10px;
+
+            font-weight:700;
+
+            color:#374151;
+        }
+
+        .input-box{
+
+            position:relative;
+        }
+
+        .input-box i{
+
+            position:absolute;
+
+            left:15px;
+
+            top:50%;
+
+            transform:translateY(-50%);
+
+            color:#6b7280;
+        }
+
+        .input-box select,
+        .input-box input,
+        .input-box textarea{
+
+            width:100%;
+
+            padding:15px 15px 15px 48px;
+
+            border-radius:14px;
+
+            border:1px solid #d1d5db;
+
+            outline:none;
+
+            font-size:15px;
+
+            transition:.3s;
+
+            background:#f9fafb;
+        }
+
+        textarea{
+
+            resize:none;
+
+            height:120px;
+        }
+
+        .input-box select:focus,
+        .input-box input:focus,
+        .input-box textarea:focus{
+
+            border-color:#007bff;
+
+            background:white;
+
+            box-shadow:
+            0 0 0 4px rgba(0,123,255,0.1);
+        }
+
+        /* ===================================
+                BUTTON
+        =================================== */
+
+        .submit-btn{
+
+            width:100%;
+
+            padding:16px;
+
+            border:none;
+
+            border-radius:16px;
+
+            background:
+            linear-gradient(
+                135deg,
+                #007bff,
+                #00c6ff
+            );
+
+            color:white;
+
+            font-size:17px;
+
+            font-weight:700;
+
+            cursor:pointer;
+
+            transition:.3s;
+        }
+
+        .submit-btn:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:
+            0 8px 18px rgba(0,123,255,0.3);
+        }
+
+        /* ===================================
+                MESSAGE
+        =================================== */
+
+        .message{
+
+            background:#dcfce7;
+
+            color:#166534;
+
+            padding:14px;
+
+            border-radius:12px;
+
+            margin-bottom:25px;
+
+            font-weight:600;
+        }
+
+        /* ===================================
+                MOBILE
+        =================================== */
+
+        @media(max-width:768px){
+
+            .topbar{
+
+                flex-direction:column;
+
+                gap:15px;
+
+                text-align:center;
+            }
+
+            .topbar h1{
+
+                font-size:22px;
+            }
+
+            .card{
+
+                padding:22px;
+            }
+
+            .card-header h2{
+
+                font-size:26px;
+            }
+
+            .home-btn{
+
+                width:100%;
+
+                justify-content:center;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <h1>
+            ICE BAY Stock Manager
+        </h1>
+
+        <a href="/" class="home-btn">
+
+            <i class="fas fa-house"></i>
+
+            Back To Home
+
+        </a>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="wrapper">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    Add New Stock
+                </h2>
+
+                <p>
+                    Manage and update your product stock easily
+                </p>
+
+            </div>
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="message">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <!-- PRODUCT -->
+
+                <div class="form-group">
+
+                    <label>
+                        Select Product
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fas fa-ice-cream"></i>
+
+                        <select
+                            name="product"
+                            required
+                        >
+
+                            <option value="">
+                                Choose Product
+                            </option>
+
+                            {% for product in products %}
+
+                            <option value="{{ product.id }}">
+
+                                {{ product.name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <!-- ENTRY TYPE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Entry Type
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fas fa-layer-group"></i>
+
+                        <select
+                            name="entry_type"
+                            required
+                        >
+
+                            <option value="OPENING">
+                                Opening Stock
+                            </option>
+
+                            <option value="PURCHASE">
+                                Purchase
+                            </option>
+
+                            <option value="ADJUSTMENT">
+                                Adjustment
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <!-- QUANTITY -->
+
+                <div class="form-group">
+
+                    <label>
+                        Quantity
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fas fa-box"></i>
+
+                        <input
+                            type="number"
+                            name="quantity"
+                            min="1"
+                            placeholder="Enter Quantity"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+                <!-- NOTE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Note
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fas fa-note-sticky"></i>
+
+                        <textarea
+                            name="note"
+                            placeholder="Write note here..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+
+                    <i class="fas fa-plus-circle"></i>
+
+                    Add Stock
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

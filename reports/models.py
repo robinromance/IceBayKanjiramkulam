@@ -16,6 +16,7 @@ class DailyProductReport(models.Model):
 
     quantity_sold = models.IntegerField(default=0)
     total_sales = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    
 
 class DailyStockReport(models.Model):
     date = models.DateField()
