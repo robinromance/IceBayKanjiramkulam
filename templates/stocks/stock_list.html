@@ -3,6 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
+<<<<<<< HEAD
 
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
@@ -72,6 +73,62 @@ body{
     gap:10px;
 
     transition:.3s;
+=======
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page_title|default:"Stock Report" }}</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #f2f4f8;
+    font-size: 16px;
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #fff;
+    padding: 18px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* MAIN CARD */
+.card {
+    max-width: 1000px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(0,0,0,.08);
+    padding: 18px;
+}
+
+/* BACK LINK */
+.back-link {
+    display: inline-block;
+    margin-bottom: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+/* SEARCH + FILTER */
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.actions input,
+.actions button {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+>>>>>>> 327120378d24d4ae1f78a867458175b848b5b73e
 }
 
 .home-btn:hover{
@@ -103,6 +160,7 @@ body{
     margin-bottom:25px;
 }
 
+<<<<<<< HEAD
 .search-box input{
     width:100%;
 
@@ -349,6 +407,147 @@ tbody tr:hover{
         bottom:10px;
         z-index:999;
     }
+=======
+/* DESKTOP TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 14px;
+    text-align: left;
+    font-size: 17px;
+}
+
+thead {
+    background: #f8f9fa;
+}
+
+tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+/* BADGES */
+.badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.good { background: #e6f4ea; color: #1e7e34; }
+.low { background: #fff3cd; color: #856404; }
+.critical {
+    background: #fdecea;
+    color: #b02a37;
+    animation: glow 1.2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 6px rgba(255,0,0,.4); }
+    to { box-shadow: 0 0 16px rgba(255,0,0,.8); }
+}
+
+/* TOTAL ROW */
+.total-row {
+    background: #f1f1f1;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+/* ========================= */
+/* MOBILE VIEW */
+/* ========================= */
+.mobile-list {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    body{
+        font-size: 17px;
+    }
+    tbody tr {
+        background: #fff;
+        margin-bottom: 18px;
+        border-radius: 14px;
+        padding: 18px;
+        box-shadow: 0 12px 28px rgba(0,0,0,.12);
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        font-size: 18px;   /* bigger row text */
+    }
+
+    td::before {
+        font-weight: 700;
+        font-size: 15px;
+        color: #444;
+    }
+
+    .badge {
+        font-size: 16px;
+        padding: 8px 18px;
+    }
+
+    table {
+        display: none;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .actions input,
+    .actions button {
+        width: 80%;
+        font-size: 16px;
+    }
+
+    .mobile-list {
+        display: block;
+    }
+
+    .stock-card {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+        border-left: 5px solid #0d6efd;
+    }
+
+    .stock-title {
+        font-weight: 600;
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .stock-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 18px;
+        margin-bottom: 6px;
+        color: #555;
+    }
+
+    .mobile-total {
+        position: sticky;
+        bottom: 0;
+        background: #0d6efd;
+        color: white;
+        text-align: center;
+        padding: 14px;
+        font-weight: 600;
+        border-radius: 14px;
+        margin-top: 10px;
+        box-shadow: 0 -4px 15px rgba(0,0,0,.15);
+    }
+>>>>>>> 327120378d24d4ae1f78a867458175b848b5b73e
 }
 
 </style>
@@ -381,6 +580,7 @@ tbody tr:hover{
 
     <!-- SEARCH -->
 
+<<<<<<< HEAD
     <div class="top-bar">
 
         <div class="search-box">
@@ -556,6 +756,81 @@ tbody tr:hover{
         Total Products :
         {{ stocks|length }}
 
+    </div>
+=======
+    <!-- SEARCH -->
+    <form method="get" class="actions">
+        <input type="text" id="searchInput" placeholder="🔍 Search product...">
+        <input type="date" name="from" value="{{ request.GET.from }}">
+        <input type="date" name="to" value="{{ request.GET.to }}">
+        <button type="submit">Filter</button>
+    </form>
+
+    <!-- DESKTOP TABLE -->
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Stock</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock in stocks %}
+        <tr class="stock-row" data-name="{{ stock.product.name|lower }}">
+            <td>{{ forloop.counter }}</td>
+            <td>{{ stock.product.name }}</td>
+            <td>
+                {% if stock.quantity <= 5 %}
+                    <span class="badge critical">🔥 {{ stock.quantity }}</span>
+                {% elif stock.quantity <= 10 %}
+                    <span class="badge low">⚠ {{ stock.quantity }}</span>
+                {% else %}
+                    <span class="badge good">✔ {{ stock.quantity }}</span>
+                {% endif %}
+            </td>
+            <td>₹ {{ stock.product.price }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="total-row">
+            <td colspan="4" style="text-align:right">
+                Total Products: {{ stocks|length }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+>>>>>>> 327120378d24d4ae1f78a867458175b848b5b73e
+
+    <!-- MOBILE CARDS -->
+    <div class="mobile-list">
+        {% for stock in stocks %}
+        <div class="stock-card stock-row" data-name="{{ stock.product.name|lower }}">
+            <div class="stock-title">
+                {{ forloop.counter }}. {{ stock.product.name }}
+            </div>
+
+            <div class="stock-info">
+                <span>Price:</span>
+                <span>₹ {{ stock.product.price }}</span>
+            </div>
+
+            <div class="stock-info">
+                <span>Stock:</span>
+                {% if stock.quantity <= 5 %}
+                    <span class="badge critical">🔥 {{ stock.quantity }}</span>
+                {% elif stock.quantity <= 10 %}
+                    <span class="badge low">⚠ {{ stock.quantity }}</span>
+                {% else %}
+                    <span class="badge good">✔ {{ stock.quantity }}</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="mobile-total">
+            Total Products: {{ stocks|length }}
+        </div>
     </div>
 
 </div>
