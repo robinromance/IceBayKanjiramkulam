@@ -1,873 +1,730 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<<<<<<< HEAD
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>
-    {{ page_title|default:"Stock Report" }}
-</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<style>
-
-/* ===================================
-            GLOBAL
-=================================== */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:'Segoe UI',sans-serif;
-    background:linear-gradient(135deg,#eef4ff,#f8fbff);
-    color:#111827;
-    min-height:100vh;
-}
-
-/* ===================================
-            HEADER
-=================================== */
-
-.header{
-    background:linear-gradient(135deg,#007bff,#00c6ff);
-    color:white;
-    padding:20px 25px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    flex-wrap:wrap;
-
-    box-shadow:0 6px 20px rgba(0,0,0,.12);
-}
-
-.header h1{
-    font-size:30px;
-    font-weight:700;
-}
-
-.home-btn{
-    text-decoration:none;
-    background:white;
-    color:#007bff;
-
-    padding:12px 18px;
-
-    border-radius:14px;
-
-    font-weight:700;
-
-    display:flex;
-    align-items:center;
-    gap:10px;
-
-    transition:.3s;
-=======
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ page_title|default:"Stock Report" }}</title>
-
-<style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: #f2f4f8;
-    font-size: 16px;
-}
-
-/* HEADER */
-.header {
-    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
-    color: #fff;
-    padding: 18px;
-    text-align: center;
-    font-size: 28px;
-    font-weight: 600;
-}
-
-/* MAIN CARD */
-.card {
-    max-width: 1000px;
-    margin: 20px auto;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 12px 28px rgba(0,0,0,.08);
-    padding: 18px;
-}
-
-/* BACK LINK */
-.back-link {
-    display: inline-block;
-    margin-bottom: 15px;
-    text-decoration: none;
-    font-weight: 600;
-    color: #0d6efd;
-}
-
-/* SEARCH + FILTER */
-.actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.actions input,
-.actions button {
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    font-size: 14px;
->>>>>>> 327120378d24d4ae1f78a867458175b848b5b73e
-}
-
-.home-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 18px rgba(0,0,0,.15);
-}
-
-/* ===================================
-            MAIN CARD
-=================================== */
-
-.card{
-    max-width:1200px;
-    margin:25px auto;
-    background:white;
-
-    border-radius:24px;
-
-    padding:25px;
-
-    box-shadow:0 10px 35px rgba(0,0,0,.08);
-}
-
-/* ===================================
-            SEARCH
-=================================== */
-
-.top-bar{
-    margin-bottom:25px;
-}
-
-<<<<<<< HEAD
-.search-box input{
-    width:100%;
-
-    padding:15px 18px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:#f8fafc;
-
-    font-size:15px;
-
-    transition:.3s;
-
-    box-shadow:0 4px 12px rgba(0,0,0,.05);
-}
-
-.search-box input:focus{
-    outline:none;
-    background:white;
-    box-shadow:0 6px 20px rgba(13,110,253,.15);
-}
-
-/* ===================================
-            TABLE
-=================================== */
-
-.table-wrapper{
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-thead{
-    background:#f3f7ff;
-}
-
-th{
-    padding:18px;
-    text-align:left;
-
-    color:#374151;
-
-    font-size:15px;
-    font-weight:700;
-}
-
-td{
-    padding:18px;
-    border-bottom:1px solid #eef2f7;
-    font-size:15px;
-}
-
-tbody tr{
-    transition:.3s;
-}
-
-tbody tr:hover{
-    background:#f9fbff;
-}
-
-/* ===================================
-            PRODUCT
-=================================== */
-
-.product-box{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.product-icon{
-    width:45px;
-    height:45px;
-
-    border-radius:12px;
-
-    background:linear-gradient(135deg,#007bff,#00c6ff);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:white;
-    font-size:18px;
-}
-
-.product-name{
-    font-weight:700;
-}
-
-/* ===================================
-            BADGES
-=================================== */
-
-.badge{
-    padding:8px 14px;
-
-    border-radius:30px;
-
-    font-size:14px;
-    font-weight:700;
-
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-}
-
-.good{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.low{
-    background:#fef3c7;
-    color:#92400e;
-}
-
-.critical{
-    background:#fee2e2;
-    color:#b91c1c;
-    animation:pulse 1s infinite alternate;
-}
-
-@keyframes pulse{
-    from{
-        transform:scale(1);
-    }
-    to{
-        transform:scale(1.05);
-    }
-}
-
-/* ===================================
-            TOTAL BOX
-=================================== */
-
-.total-box{
-    margin-top:25px;
-
-    background:linear-gradient(135deg,#007bff,#00c6ff);
-
-    color:white;
-
-    padding:18px;
-
-    border-radius:18px;
-
-    text-align:center;
-
-    font-size:20px;
-    font-weight:700;
-}
-
-/* ===================================
-            MOBILE CARDS
-=================================== */
-
-.mobile-list{
-    display:none;
-}
-
-/* ===================================
-            MOBILE
-=================================== */
-
-@media(max-width:768px){
-
-    .header{
-        flex-direction:column;
-        text-align:center;
-    }
-
-    .header h1{
-        font-size:24px;
-    }
-
-    .home-btn{
-        width:100%;
-        justify-content:center;
-    }
-
-    .card{
-        margin:15px;
-        padding:18px;
-        border-radius:20px;
-    }
-
-    .table-wrapper{
-        display:none;
-    }
-
-    .mobile-list{
-        display:block;
-    }
-
-    .stock-card{
-        background:white;
-
-        border-radius:18px;
-
-        padding:18px;
-
-        margin-bottom:16px;
-
-        box-shadow:0 8px 25px rgba(0,0,0,.08);
-
-        border-left:5px solid #007bff;
-    }
-
-    .stock-top{
-        display:flex;
-        align-items:center;
-        gap:12px;
-
-        margin-bottom:15px;
-    }
-
-    .stock-top .product-icon{
-        width:50px;
-        height:50px;
-    }
-
-    .stock-name{
-        font-size:18px;
-        font-weight:700;
-    }
-
-    .stock-info{
-        display:flex;
-        justify-content:space-between;
-
-        margin-bottom:12px;
-
-        font-size:16px;
-    }
-
-    .total-box{
-        position:sticky;
-        bottom:10px;
-        z-index:999;
-    }
-=======
-/* DESKTOP TABLE */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 14px;
-    text-align: left;
-    font-size: 17px;
-}
-
-thead {
-    background: #f8f9fa;
-}
-
-tbody tr {
-    border-bottom: 1px solid #eee;
-}
-
-/* BADGES */
-.badge {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 15px;
-}
-
-.good { background: #e6f4ea; color: #1e7e34; }
-.low { background: #fff3cd; color: #856404; }
-.critical {
-    background: #fdecea;
-    color: #b02a37;
-    animation: glow 1.2s infinite alternate;
-}
-
-@keyframes glow {
-    from { box-shadow: 0 0 6px rgba(255,0,0,.4); }
-    to { box-shadow: 0 0 16px rgba(255,0,0,.8); }
-}
-
-/* TOTAL ROW */
-.total-row {
-    background: #f1f1f1;
-    font-weight: 700;
-    font-size: 16px;
-}
-
-/* ========================= */
-/* MOBILE VIEW */
-/* ========================= */
-.mobile-list {
-    display: none;
-}
-
-@media (max-width: 768px) {
-
-    body{
-        font-size: 17px;
-    }
-    tbody tr {
-        background: #fff;
-        margin-bottom: 18px;
-        border-radius: 14px;
-        padding: 18px;
-        box-shadow: 0 12px 28px rgba(0,0,0,.12);
-    }
-
-    td {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        font-size: 18px;   /* bigger row text */
-    }
-
-    td::before {
-        font-weight: 700;
-        font-size: 15px;
-        color: #444;
-    }
-
-    .badge {
-        font-size: 16px;
-        padding: 8px 18px;
-    }
-
-    table {
-        display: none;
-    }
-
-    .actions {
-        flex-direction: column;
-    }
-
-    .actions input,
-    .actions button {
-        width: 80%;
-        font-size: 16px;
-    }
-
-    .mobile-list {
-        display: block;
-    }
-
-    .stock-card {
-        background: #ffffff;
-        border-radius: 14px;
-        padding: 15px;
-        margin-bottom: 15px;
-        box-shadow: 0 8px 20px rgba(0,0,0,.08);
-        border-left: 5px solid #0d6efd;
-    }
-
-    .stock-title {
-        font-weight: 600;
-        font-size: 20px;
-        margin-bottom: 8px;
-    }
-
-    .stock-info {
-        display: flex;
-        justify-content: space-between;
-        font-size: 18px;
-        margin-bottom: 6px;
-        color: #555;
-    }
-
-    .mobile-total {
-        position: sticky;
-        bottom: 0;
-        background: #0d6efd;
-        color: white;
-        text-align: center;
-        padding: 14px;
-        font-weight: 600;
-        border-radius: 14px;
-        margin-top: 10px;
-        box-shadow: 0 -4px 15px rgba(0,0,0,.15);
-    }
->>>>>>> 327120378d24d4ae1f78a867458175b848b5b73e
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title|default:"Stock Report" }} — ICE BAY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+
+        :root {
+            --blue-dark:   #0a1628;
+            --blue-mid:    #0f2548;
+            --blue-accent: #1a6ef5;
+            --blue-glow:   #3d8bff;
+            --ice:         #e8f4ff;
+            --ice-soft:    #f0f8ff;
+            --gold:        #f5c842;
+            --white:       #ffffff;
+            --gray-100:    #f7f9fc;
+            --gray-200:    #eef1f6;
+            --gray-400:    #a0aec0;
+            --gray-600:    #4a5568;
+            --gray-800:    #1a202c;
+            --success:     #00c48c;
+            --warning:     #f59e0b;
+            --danger:      #ef4444;
+            --radius-sm:   8px;
+            --radius-md:   14px;
+            --radius-lg:   22px;
+            --shadow-card: 0 8px 40px rgba(10, 22, 40, 0.12);
+            --shadow-glow: 0 0 60px rgba(26, 110, 245, 0.15);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--blue-dark);
+            min-height: 100vh;
+            padding: 2.5rem 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== BACKGROUND ===== */
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(26,110,245,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(26,110,245,0.10) 0%, transparent 55%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== WRAPPER ===== */
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        /* ===== MAIN CARD ===== */
+
+        .main-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card), var(--shadow-glow);
+            animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HEADER ===== */
+
+        .card-header {
+            background: var(--blue-mid);
+            padding: 2.5rem 2.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 220px; height: 220px;
+            border-radius: 50%;
+            border: 40px solid rgba(255,255,255,0.04);
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; right: 80px;
+            width: 160px; height: 160px;
+            border-radius: 50%;
+            border: 30px solid rgba(255,255,255,0.03);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245, 200, 66, 0.15);
+            border: 1px solid rgba(245, 200, 66, 0.3);
+            border-radius: 50px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .brand-badge::before { content: '❄'; font-size: 12px; }
+
+        .brand-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.8rem;
+            color: var(--white);
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .brand-sub {
+            font-size: 13px;
+            color: var(--gray-400);
+            font-weight: 300;
+            margin-top: 6px;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--white);
+            border-radius: var(--radius-sm);
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .home-btn:hover {
+            background: rgba(255,255,255,0.14);
+            transform: translateY(-2px);
+        }
+
+        /* ===== STATUS BAR ===== */
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1.8rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 10px rgba(0,196,140,0.6);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.6; transform: scale(0.85); }
+        }
+
+        .status-text {
+            font-size: 13px;
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        /* ===== SUMMARY CARDS ===== */
+
+        .summary-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            padding: 2rem 2.5rem 0;
+        }
+
+        .summary-card {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .summary-card .s-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-card .s-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            color: var(--gray-800);
+            line-height: 1;
+        }
+
+        .summary-card.s-good   { border-left: 3px solid var(--success); }
+        .summary-card.s-low    { border-left: 3px solid var(--warning); }
+        .summary-card.s-danger { border-left: 3px solid var(--danger);  }
+
+        .summary-card.s-good   .s-value { color: #065f46; }
+        .summary-card.s-low    .s-value { color: #92400e; }
+        .summary-card.s-danger .s-value { color: #b91c1c; }
+
+        /* ===== SEARCH ===== */
+
+        .search-section {
+            padding: 1.8rem 2.5rem 0;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            font-size: 15px;
+        }
+
+        .search-wrap input {
+            width: 100%;
+            padding: 13px 18px 13px 44px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            background: var(--gray-100);
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--gray-800);
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-wrap input:focus {
+            border-color: var(--blue-accent);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(26,110,245,0.1);
+        }
+
+        .search-wrap input::placeholder { color: var(--gray-400); }
+
+        /* ===== BODY ===== */
+
+        .card-body { padding: 1.8rem 2.5rem 2rem; }
+
+        /* ===== DESKTOP TABLE ===== */
+
+        .table-wrap {
+            border-radius: var(--radius-md);
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        thead { background: var(--gray-100); }
+
+        thead th {
+            padding: 14px 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            text-align: left;
+        }
+
+        thead th:nth-child(3),
+        thead th:nth-child(4) { text-align: center; }
+
+        tbody tr {
+            border-top: 1px solid var(--gray-200);
+            transition: background 0.15s;
+        }
+
+        tbody tr:hover { background: var(--ice-soft); }
+
+        tbody td {
+            padding: 16px 20px;
+            font-size: 15px;
+            color: var(--gray-800);
+            vertical-align: middle;
+        }
+
+        tbody td:nth-child(3),
+        tbody td:nth-child(4) { text-align: center; }
+
+        .sno {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-400);
+            width: 36px; height: 36px;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-icon {
+            width: 38px; height: 38px;
+            border-radius: var(--radius-sm);
+            background: var(--ice);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--blue-accent);
+            flex-shrink: 0;
+        }
+
+        .product-name { font-weight: 500; }
+
+        .price-tag {
+            font-weight: 600;
+            color: var(--blue-accent);
+        }
+
+        /* ===== BADGES ===== */
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .badge.good {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge.low {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge.critical {
+            background: #fee2e2;
+            color: #b91c1c;
+            animation: badge-pulse 1.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes badge-pulse {
+            from { transform: scale(1); }
+            to   { transform: scale(1.06); }
+        }
+
+        /* ===== MOBILE CARDS ===== */
+
+        .mobile-list { display: none; }
+
+        .stock-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--blue-accent);
+            transition: all 0.2s;
+        }
+
+        .stock-card:hover { background: var(--ice-soft); }
+
+        .stock-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .stock-card-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .stock-card-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: var(--gray-600);
+            padding-top: 10px;
+            border-top: 1px solid var(--gray-200);
+            margin-top: 8px;
+        }
+
+        /* ===== FOOTER ===== */
+
+        .card-footer {
+            padding: 0 2.5rem 2.5rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin-bottom: 1.8rem;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .total-box {
+            background: var(--blue-mid);
+            border-radius: var(--radius-md);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .total-box .t-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .total-box .t-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        /* ===== WATERMARK ===== */
+
+        .watermark {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 12px;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ===== MOBILE ===== */
+
+        @media (max-width: 768px) {
+
+            body { padding: 1rem; }
+
+            .card-header { padding: 1.8rem 1.5rem 1.5rem; }
+            .summary-row { padding: 1.5rem 1.5rem 0; }
+            .search-section { padding: 1.5rem 1.5rem 0; }
+            .card-body   { padding: 1.5rem; }
+            .card-footer { padding: 0 1.5rem 1.5rem; }
+
+            .brand-name  { font-size: 2rem; }
+            .header-top  { flex-direction: column; }
+            .home-btn    { width: 100%; justify-content: center; }
+
+            .table-wrap  { display: none; }
+            .mobile-list { display: block; }
+
+            .footer-row  { flex-direction: column; align-items: stretch; }
+
+            .total-box { justify-content: center; }
+        }
+
+        /* ===== PRINT ===== */
+
+        @media print {
+            body { background: white; padding: 0; }
+            body::before, body::after { display: none; }
+            .main-card { box-shadow: none; border-radius: 0; animation: none; }
+            .card-header { background: #0f2548; -webkit-print-color-adjust: exact; }
+            .total-box   { background: #0f2548; -webkit-print-color-adjust: exact; }
+            .home-btn, .watermark { display: none; }
+            .mobile-list { display: none !important; }
+            .table-wrap  { display: block !important; }
+        }
+
+    </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
+    <div class="wrapper">
+        <div class="main-card">
 
-<div class="header">
+            <!-- HEADER -->
+            <div class="card-header">
+                <div class="header-top">
+                    <div class="brand">
+                        <div class="brand-badge">Stock Report</div>
+                        <h1 class="brand-name">ICE BAY</h1>
+                        <p class="brand-sub">Adimalathura · Live Inventory</p>
+                    </div>
+                    <a href="{% url "billing_page" %}" class="home-btn">
+                        <i class="fas fa-house"></i>
+                        Back to Home
+                    </a>
+                </div>
+                <div class="status-bar">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Live Stock — {{ stocks|length }} product{{ stocks|length|pluralize }} tracked</span>
+                </div>
+            </div>
 
-    <h1>
-        {{ page_title|default:"Stock Report" }}
-    </h1>
+            <!-- SEARCH -->
+            <div class="search-section">
+                <div class="search-wrap">
+                    <i class="fas fa-search"></i>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search product..."
+                    >
+                </div>
+            </div>
 
-    <a href="/" class="home-btn">
+            <!-- BODY -->
+            <div class="card-body">
 
-        <i class="fas fa-house"></i>
+                <!-- DESKTOP TABLE -->
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product</th>
+                                <th>Stock Status</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stock in stocks %}
+                            <tr class="stock-row" data-name="{{ stock.product.name|lower }}">
+                                <td><span class="sno">{{ forloop.counter }}</span></td>
+                                <td>
+                                    <div class="product-cell">
+                                        <div class="product-icon">
+                                            <i class="fas fa-ice-cream"></i>
+                                        </div>
+                                        <span class="product-name">{{ stock.product.name }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if stock.quantity <= 5 %}
+                                        <span class="badge critical">🔥 {{ stock.quantity }} left</span>
+                                    {% elif stock.quantity <= 10 %}
+                                        <span class="badge low">⚠ {{ stock.quantity }} left</span>
+                                    {% else %}
+                                        <span class="badge good">✔ {{ stock.quantity }} left</span>
+                                    {% endif %}
+                                </td>
+                                <td><span class="price-tag">₹{{ stock.product.price }}</span></td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4">
+                                    <div style="text-align:center; padding:2rem; color:var(--gray-400);">
+                                        No stock data found.
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
 
-        Back To Home
-
-    </a>
-
-</div>
-
-<!-- MAIN CARD -->
-
-<div class="card">
-
-    <!-- SEARCH -->
-
-<<<<<<< HEAD
-    <div class="top-bar">
-
-        <div class="search-box">
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search product..."
-            >
-
-        </div>
-
-    </div>
-
-    <!-- DESKTOP TABLE -->
-
-    <div class="table-wrapper">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>#</th>
-
-                    <th>Product</th>
-
-                    <th>Stock Status</th>
-
-                    <th>Price</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                {% for stock in stocks %}
-
-                <tr
-                    class="stock-row"
-                    data-name="{{ stock.product.name|lower }}"
-                >
-
-                    <td>
-                        {{ forloop.counter }}
-                    </td>
-
-                    <td>
-
-                        <div class="product-box">
-
-                            <div class="product-icon">
-                                <i class="fas fa-ice-cream"></i>
-                            </div>
-
-                            <div class="product-name">
+                <!-- MOBILE CARDS -->
+                <div class="mobile-list">
+                    {% for stock in stocks %}
+                    <div class="stock-card stock-row" data-name="{{ stock.product.name|lower }}">
+                        <div class="stock-card-top">
+                            <div class="stock-card-name">
+                                <div class="product-icon">
+                                    <i class="fas fa-ice-cream"></i>
+                                </div>
                                 {{ stock.product.name }}
                             </div>
-
+                            {% if stock.quantity <= 5 %}
+                                <span class="badge critical">🔥 {{ stock.quantity }}</span>
+                            {% elif stock.quantity <= 10 %}
+                                <span class="badge low">⚠ {{ stock.quantity }}</span>
+                            {% else %}
+                                <span class="badge good">✔ {{ stock.quantity }}</span>
+                            {% endif %}
                         </div>
-
-                    </td>
-
-                    <td>
-
-                        {% if stock.quantity <= 5 %}
-
-                            <span class="badge critical">
-                                🔥 {{ stock.quantity }}
-                            </span>
-
-                        {% elif stock.quantity <= 10 %}
-
-                            <span class="badge low">
-                                ⚠ {{ stock.quantity }}
-                            </span>
-
-                        {% else %}
-
-                            <span class="badge good">
-                                ✔ {{ stock.quantity }}
-                            </span>
-
-                        {% endif %}
-
-                    </td>
-
-                    <td>
-                        ₹ {{ stock.product.price }}
-                    </td>
-
-                </tr>
-
-                {% endfor %}
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-    <!-- MOBILE VIEW -->
-
-    <div class="mobile-list">
-
-        {% for stock in stocks %}
-
-        <div
-            class="stock-card stock-row"
-            data-name="{{ stock.product.name|lower }}"
-        >
-
-            <div class="stock-top">
-
-                <div class="product-icon">
-                    <i class="fas fa-ice-cream"></i>
-                </div>
-
-                <div class="stock-name">
-                    {{ stock.product.name }}
+                        <div class="stock-card-info">
+                            <span>Unit Price</span>
+                            <span class="price-tag">₹{{ stock.product.price }}</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div style="text-align:center; padding:2rem; color:var(--gray-400);">
+                        No stock data found.
+                    </div>
+                    {% endfor %}
                 </div>
 
             </div>
 
-            <div class="stock-info">
-
-                <span>Price</span>
-
-                <strong>
-                    ₹ {{ stock.product.price }}
-                </strong>
-
-            </div>
-
-            <div class="stock-info">
-
-                <span>Stock</span>
-
-                {% if stock.quantity <= 5 %}
-
-                    <span class="badge critical">
-                        🔥 {{ stock.quantity }}
-                    </span>
-
-                {% elif stock.quantity <= 10 %}
-
-                    <span class="badge low">
-                        ⚠ {{ stock.quantity }}
-                    </span>
-
-                {% else %}
-
-                    <span class="badge good">
-                        ✔ {{ stock.quantity }}
-                    </span>
-
-                {% endif %}
-
+            <!-- FOOTER -->
+            <div class="card-footer">
+                <div class="divider"></div>
+                <div class="footer-row">
+                    <p style="font-size:13px; color:var(--gray-400);">
+                        Showing all products · Updated live
+                    </p>
+                    <div class="total-box">
+                        <div>
+                            <div class="t-label">Total Products</div>
+                            <div class="t-value">{{ stocks|length }}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
 
-        {% endfor %}
-
+        <p class="watermark">ICE BAY &nbsp;·&nbsp; Adimalathura &nbsp;·&nbsp; Stock Report</p>
     </div>
 
-    <!-- TOTAL -->
+    <script>
 
-    <div class="total-box">
+        // ===== SEARCH =====
 
-        Total Products :
-        {{ stocks|length }}
+        document.getElementById("searchInput").addEventListener("keyup", function () {
+            const query = this.value.toLowerCase();
+            document.querySelectorAll(".stock-row").forEach(row => {
+                row.style.display = row.dataset.name.includes(query) ? "" : "none";
+            });
+        });
 
-    </div>
-=======
-    <!-- SEARCH -->
-    <form method="get" class="actions">
-        <input type="text" id="searchInput" placeholder="🔍 Search product...">
-        <input type="date" name="from" value="{{ request.GET.from }}">
-        <input type="date" name="to" value="{{ request.GET.to }}">
-        <button type="submit">Filter</button>
-    </form>
+        // ===== COUNT SUMMARY BADGES =====
 
-    <!-- DESKTOP TABLE -->
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Stock</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for stock in stocks %}
-        <tr class="stock-row" data-name="{{ stock.product.name|lower }}">
-            <td>{{ forloop.counter }}</td>
-            <td>{{ stock.product.name }}</td>
-            <td>
-                {% if stock.quantity <= 5 %}
-                    <span class="badge critical">🔥 {{ stock.quantity }}</span>
-                {% elif stock.quantity <= 10 %}
-                    <span class="badge low">⚠ {{ stock.quantity }}</span>
-                {% else %}
-                    <span class="badge good">✔ {{ stock.quantity }}</span>
-                {% endif %}
-            </td>
-            <td>₹ {{ stock.product.price }}</td>
-        </tr>
-        {% endfor %}
-        <tr class="total-row">
-            <td colspan="4" style="text-align:right">
-                Total Products: {{ stocks|length }}
-            </td>
-        </tr>
-        </tbody>
-    </table>
->>>>>>> 327120378d24d4ae1f78a867458175b848b5b73e
+        document.addEventListener("DOMContentLoaded", function () {
+            const rows = document.querySelectorAll(".stock-row");
+            let low = 0, critical = 0;
 
-    <!-- MOBILE CARDS -->
-    <div class="mobile-list">
-        {% for stock in stocks %}
-        <div class="stock-card stock-row" data-name="{{ stock.product.name|lower }}">
-            <div class="stock-title">
-                {{ forloop.counter }}. {{ stock.product.name }}
-            </div>
+            rows.forEach(row => {
+                const badge = row.querySelector(".badge");
+                if (badge.classList.contains("critical")) critical++;
+                else if (badge.classList.contains("low")) low++;
+            });
 
-            <div class="stock-info">
-                <span>Price:</span>
-                <span>₹ {{ stock.product.price }}</span>
-            </div>
+            document.querySelector(".s-low-val").textContent  = low;
+            document.querySelector(".s-crit-val").textContent = critical;
 
-            <div class="stock-info">
-                <span>Stock:</span>
-                {% if stock.quantity <= 5 %}
-                    <span class="badge critical">🔥 {{ stock.quantity }}</span>
-                {% elif stock.quantity <= 10 %}
-                    <span class="badge low">⚠ {{ stock.quantity }}</span>
-                {% else %}
-                    <span class="badge good">✔ {{ stock.quantity }}</span>
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
+            const goodCard = document.querySelector(".s-good .s-value");
+            goodCard.textContent = rows.length - low - critical;
+        });
 
-        <div class="mobile-total">
-            Total Products: {{ stocks|length }}
-        </div>
-    </div>
-
-</div>
-
-<script>
-
-function searchStock(){
-
-    const input =
-        document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase();
-
-    const rows =
-        document.querySelectorAll(".stock-row");
-
-    rows.forEach(row => {
-
-        const name =
-            row.dataset.name;
-
-        row.style.display =
-            name.includes(input)
-            ? ""
-            : "none";
-    });
-}
-
-document
-.getElementById("searchInput")
-.addEventListener(
-    "keyup",
-    searchStock
-);
-
-</script>
+    </script>
 
 </body>
 </html>

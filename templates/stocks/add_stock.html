@@ -1,528 +1,629 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>ICE BAY | Add Stock</title>
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Stock — ICE BAY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
+        :root {
+            --blue-dark:   #0a1628;
+            --blue-mid:    #0f2548;
+            --blue-accent: #1a6ef5;
+            --blue-glow:   #3d8bff;
+            --ice:         #e8f4ff;
+            --ice-soft:    #f0f8ff;
+            --gold:        #f5c842;
+            --white:       #ffffff;
+            --gray-100:    #f7f9fc;
+            --gray-200:    #eef1f6;
+            --gray-400:    #a0aec0;
+            --gray-600:    #4a5568;
+            --gray-800:    #1a202c;
+            --success:     #00c48c;
+            --radius-sm:   8px;
+            --radius-md:   14px;
+            --radius-lg:   22px;
+            --shadow-card: 0 8px 40px rgba(10, 22, 40, 0.12);
+            --shadow-glow: 0 0 60px rgba(26, 110, 245, 0.15);
         }
 
-        body{
-
-            font-family:'Segoe UI',sans-serif;
-
-            background:#f3f6fb;
-
-            min-height:100vh;
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* ===================================
-                HEADER
-        =================================== */
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--blue-dark);
+            min-height: 100vh;
+            padding: 2.5rem 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-        .topbar{
+        /* ===== BACKGROUND ===== */
 
-            width:100%;
-
-            padding:18px 25px;
-
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
             background:
-            linear-gradient(
-                135deg,
-                #007bff,
-                #00c6ff
-            );
-
-            display:flex;
-
-            justify-content:space-between;
-
-            align-items:center;
-
-            color:white;
-
-            box-shadow:
-            0 4px 12px rgba(0,0,0,0.1);
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(26,110,245,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(26,110,245,0.10) 0%, transparent 55%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .topbar h1{
-
-            font-size:28px;
-
-            letter-spacing:1px;
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .home-btn{
+        /* ===== WRAPPER ===== */
 
-            background:white;
-
-            color:#007bff;
-
-            text-decoration:none;
-
-            padding:12px 18px;
-
-            border-radius:12px;
-
-            font-weight:700;
-
-            display:flex;
-
-            align-items:center;
-
-            gap:10px;
-
-            transition:.3s;
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 680px;
+            margin: 0 auto;
         }
 
-        .home-btn:hover{
+        /* ===== MAIN CARD ===== */
 
-            transform:translateY(-2px);
-
-            box-shadow:
-            0 6px 15px rgba(0,0,0,0.15);
+        .main-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card), var(--shadow-glow);
+            animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
-        /* ===================================
-                CONTAINER
-        =================================== */
-
-        .wrapper{
-
-            display:flex;
-
-            justify-content:center;
-
-            align-items:center;
-
-            padding:40px 20px;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        .card{
+        /* ===== HEADER ===== */
 
-            width:100%;
-
-            max-width:750px;
-
-            background:white;
-
-            border-radius:24px;
-
-            padding:35px;
-
-            box-shadow:
-            0 8px 25px rgba(0,0,0,0.08);
+        .card-header {
+            background: var(--blue-mid);
+            padding: 2.5rem 2.5rem 2rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card-header{
-
-            text-align:center;
-
-            margin-bottom:30px;
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 220px; height: 220px;
+            border-radius: 50%;
+            border: 40px solid rgba(255,255,255,0.04);
         }
 
-        .card-header h2{
-
-            font-size:32px;
-
-            color:#111827;
-
-            margin-bottom:10px;
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; right: 80px;
+            width: 160px; height: 160px;
+            border-radius: 50%;
+            border: 30px solid rgba(255,255,255,0.03);
         }
 
-        .card-header p{
-
-            color:#6b7280;
-
-            font-size:15px;
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1.5rem;
         }
 
-        /* ===================================
-                FORM
-        =================================== */
-
-        .form-group{
-
-            margin-bottom:22px;
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245, 200, 66, 0.15);
+            border: 1px solid rgba(245, 200, 66, 0.3);
+            border-radius: 50px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
         }
 
-        .form-group label{
+        .brand-badge::before { content: '❄'; font-size: 12px; }
 
-            display:block;
-
-            margin-bottom:10px;
-
-            font-weight:700;
-
-            color:#374151;
+        .brand-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.8rem;
+            color: var(--white);
+            line-height: 1;
+            letter-spacing: -1px;
         }
 
-        .input-box{
-
-            position:relative;
+        .brand-sub {
+            font-size: 13px;
+            color: var(--gray-400);
+            font-weight: 300;
+            margin-top: 6px;
         }
 
-        .input-box i{
-
-            position:absolute;
-
-            left:15px;
-
-            top:50%;
-
-            transform:translateY(-50%);
-
-            color:#6b7280;
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--white);
+            border-radius: var(--radius-sm);
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
         }
 
-        .input-box select,
-        .input-box input,
-        .input-box textarea{
-
-            width:100%;
-
-            padding:15px 15px 15px 48px;
-
-            border-radius:14px;
-
-            border:1px solid #d1d5db;
-
-            outline:none;
-
-            font-size:15px;
-
-            transition:.3s;
-
-            background:#f9fafb;
+        .home-btn:hover {
+            background: rgba(255,255,255,0.14);
+            transform: translateY(-2px);
         }
 
-        textarea{
+        /* ===== STATUS BAR ===== */
 
-            resize:none;
-
-            height:120px;
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1.8rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
         }
 
-        .input-box select:focus,
-        .input-box input:focus,
-        .input-box textarea:focus{
-
-            border-color:#007bff;
-
-            background:white;
-
-            box-shadow:
-            0 0 0 4px rgba(0,123,255,0.1);
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 10px rgba(0,196,140,0.6);
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        /* ===================================
-                BUTTON
-        =================================== */
-
-        .submit-btn{
-
-            width:100%;
-
-            padding:16px;
-
-            border:none;
-
-            border-radius:16px;
-
-            background:
-            linear-gradient(
-                135deg,
-                #007bff,
-                #00c6ff
-            );
-
-            color:white;
-
-            font-size:17px;
-
-            font-weight:700;
-
-            cursor:pointer;
-
-            transition:.3s;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.6; transform: scale(0.85); }
         }
 
-        .submit-btn:hover{
-
-            transform:translateY(-2px);
-
-            box-shadow:
-            0 8px 18px rgba(0,123,255,0.3);
+        .status-text {
+            font-size: 13px;
+            color: var(--success);
+            font-weight: 500;
         }
 
-        /* ===================================
-                MESSAGE
-        =================================== */
+        /* ===== FORM BODY ===== */
 
-        .message{
-
-            background:#dcfce7;
-
-            color:#166534;
-
-            padding:14px;
-
-            border-radius:12px;
-
-            margin-bottom:25px;
-
-            font-weight:600;
+        .card-body {
+            padding: 2rem 2.5rem 2.5rem;
         }
 
-        /* ===================================
-                MOBILE
-        =================================== */
+        /* ===== SUCCESS MESSAGE ===== */
 
-        @media(max-width:768px){
+        .message {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.8rem;
+            font-weight: 500;
+            font-size: 14px;
+            animation: slideUp 0.3s ease both;
+        }
 
-            .topbar{
+        .message i { font-size: 16px; }
 
-                flex-direction:column;
+        /* ===== FORM GRID ===== */
 
-                gap:15px;
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
 
-                text-align:center;
-            }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-            .topbar h1{
+        .form-group.full { grid-column: 1 / -1; }
 
-                font-size:22px;
-            }
+        /* ===== LABEL ===== */
 
-            .card{
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-                padding:22px;
-            }
+        label i {
+            font-size: 11px;
+            color: var(--blue-accent);
+        }
 
-            .card-header h2{
+        /* ===== INPUT STYLES ===== */
 
-                font-size:26px;
-            }
+        .input-wrap {
+            position: relative;
+        }
 
-            .home-btn{
+        .input-wrap .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 1;
+        }
 
-                width:100%;
+        .input-wrap.textarea-wrap .input-icon {
+            top: 16px;
+            transform: none;
+        }
 
-                justify-content:center;
-            }
+        .input-wrap select,
+        .input-wrap input,
+        .input-wrap textarea {
+            width: 100%;
+            padding: 13px 14px 13px 42px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            background: var(--gray-100);
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--gray-800);
+            outline: none;
+            transition: all 0.2s;
+            appearance: none;
+        }
+
+        .input-wrap select:focus,
+        .input-wrap input:focus,
+        .input-wrap textarea:focus {
+            border-color: var(--blue-accent);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(26,110,245,0.1);
+        }
+
+        .input-wrap select::placeholder,
+        .input-wrap input::placeholder,
+        .input-wrap textarea::placeholder {
+            color: var(--gray-400);
+        }
+
+        .input-wrap textarea {
+            resize: none;
+            height: 110px;
+            padding-top: 13px;
+        }
+
+        /* Dropdown arrow */
+        .select-wrap::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            font-size: 11px;
+            pointer-events: none;
+        }
+
+        /* ===== ENTRY TYPE PILLS ===== */
+
+        .entry-pills {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .entry-pill {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .entry-pill input[type="radio"] {
+            display: none;
+        }
+
+        .entry-pill label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 14px 10px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            background: var(--gray-100);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: none;
+            letter-spacing: 0;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+
+        .entry-pill label i {
+            font-size: 18px;
+            color: var(--gray-400);
+        }
+
+        .entry-pill input[type="radio"]:checked + label {
+            border-color: var(--blue-accent);
+            background: var(--ice);
+            color: var(--blue-accent);
+        }
+
+        .entry-pill input[type="radio"]:checked + label i {
+            color: var(--blue-accent);
+        }
+
+        .entry-pill label:hover {
+            border-color: var(--blue-accent);
+            background: var(--ice-soft);
+        }
+
+        /* ===== DIVIDER ===== */
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 1.5rem 0 1.2rem;
+        }
+
+        .section-divider span {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            white-space: nowrap;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-200);
+        }
+
+        /* ===== SUBMIT BUTTON ===== */
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--blue-accent), var(--blue-glow));
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1.8rem;
+            letter-spacing: 0.3px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(26,110,245,0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ===== WATERMARK ===== */
+
+        .watermark {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 12px;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ===== MOBILE ===== */
+
+        @media (max-width: 600px) {
+
+            body { padding: 1rem; }
+
+            .card-header { padding: 1.8rem 1.5rem 1.5rem; }
+            .card-body   { padding: 1.5rem; }
+
+            .brand-name  { font-size: 2rem; }
+            .header-top  { flex-direction: column; }
+            .home-btn    { width: 100%; justify-content: center; }
+
+            .form-grid   { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: 1; }
+
+            .entry-pills { flex-direction: row; }
+            .entry-pill  { min-width: 80px; }
         }
 
     </style>
-
 </head>
 
 <body>
 
-    <!-- TOPBAR -->
-
-    <div class="topbar">
-
-        <h1>
-            ICE BAY Stock Manager
-        </h1>
-
-        <a href="/" class="home-btn">
-
-            <i class="fas fa-house"></i>
-
-            Back To Home
-
-        </a>
-
-    </div>
-
-    <!-- MAIN -->
-
     <div class="wrapper">
+        <div class="main-card">
 
-        <div class="card">
-
+            <!-- HEADER -->
             <div class="card-header">
-
-                <h2>
-                    Add New Stock
-                </h2>
-
-                <p>
-                    Manage and update your product stock easily
-                </p>
-
+                <div class="header-top">
+                    <div class="brand">
+                        <div class="brand-badge">Stock Manager</div>
+                        <h1 class="brand-name">ICE BAY</h1>
+                        <p class="brand-sub">Adimalathura · Add New Stock</p>
+                    </div>
+                    <a href="/" class="home-btn">
+                        <i class="fas fa-house"></i>
+                        Back to Home
+                    </a>
+                </div>
+                <div class="status-bar">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Stock Manager — Ready to update inventory</span>
+                </div>
             </div>
 
-            {% if messages %}
+            <!-- FORM BODY -->
+            <div class="card-body">
 
-                {% for message in messages %}
-
+                <!-- SUCCESS MESSAGE -->
+                {% if messages %}
+                    {% for message in messages %}
                     <div class="message">
-
+                        <i class="fas fa-circle-check"></i>
                         {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="form-grid">
+
+                        <!-- PRODUCT -->
+                        <div class="form-group full">
+                            <label><i class="fas fa-ice-cream"></i> Select Product</label>
+                            <div class="input-wrap select-wrap">
+                                <i class="fas fa-ice-cream input-icon"></i>
+                                <select name="product" required>
+                                    <option value="">Choose a product...</option>
+                                    {% for product in products %}
+                                    <option value="{{ product.id }}">{{ product.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- QUANTITY -->
+                        <div class="form-group full">
+                            <label><i class="fas fa-box"></i> Quantity</label>
+                            <div class="input-wrap">
+                                <i class="fas fa-box input-icon"></i>
+                                <input
+                                    type="number"
+                                    name="quantity"
+                                    min="1"
+                                    placeholder="Enter quantity to add"
+                                    required
+                                >
+                            </div>
+                        </div>
 
                     </div>
 
-                {% endfor %}
+                    <!-- ENTRY TYPE -->
+                    <div class="section-divider"><span>Entry Type</span></div>
 
-            {% endif %}
+                    <div class="entry-pills">
 
-            <form method="POST">
-
-                {% csrf_token %}
-
-                <!-- PRODUCT -->
-
-                <div class="form-group">
-
-                    <label>
-                        Select Product
-                    </label>
-
-                    <div class="input-box">
-
-                        <i class="fas fa-ice-cream"></i>
-
-                        <select
-                            name="product"
-                            required
-                        >
-
-                            <option value="">
-                                Choose Product
-                            </option>
-
-                            {% for product in products %}
-
-                            <option value="{{ product.id }}">
-
-                                {{ product.name }}
-
-                            </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-                <!-- ENTRY TYPE -->
-
-                <div class="form-group">
-
-                    <label>
-                        Entry Type
-                    </label>
-
-                    <div class="input-box">
-
-                        <i class="fas fa-layer-group"></i>
-
-                        <select
-                            name="entry_type"
-                            required
-                        >
-
-                            <option value="OPENING">
+                        <div class="entry-pill">
+                            <input type="radio" name="entry_type" id="type_opening" value="OPENING" checked>
+                            <label for="type_opening">
+                                <i class="fas fa-door-open"></i>
                                 Opening Stock
-                            </option>
+                            </label>
+                        </div>
 
-                            <option value="PURCHASE">
+                        <div class="entry-pill">
+                            <input type="radio" name="entry_type" id="type_purchase" value="PURCHASE">
+                            <label for="type_purchase">
+                                <i class="fas fa-cart-plus"></i>
                                 Purchase
-                            </option>
+                            </label>
+                        </div>
 
-                            <option value="ADJUSTMENT">
+                        <div class="entry-pill">
+                            <input type="radio" name="entry_type" id="type_adjustment" value="ADJUSTMENT">
+                            <label for="type_adjustment">
+                                <i class="fas fa-sliders"></i>
                                 Adjustment
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-                <!-- QUANTITY -->
-
-                <div class="form-group">
-
-                    <label>
-                        Quantity
-                    </label>
-
-                    <div class="input-box">
-
-                        <i class="fas fa-box"></i>
-
-                        <input
-                            type="number"
-                            name="quantity"
-                            min="1"
-                            placeholder="Enter Quantity"
-                            required
-                        >
+                            </label>
+                        </div>
 
                     </div>
 
-                </div>
+                    <!-- NOTE -->
+                    <div class="section-divider"><span>Additional Info</span></div>
 
-                <!-- NOTE -->
-
-                <div class="form-group">
-
-                    <label>
-                        Note
-                    </label>
-
-                    <div class="input-box">
-
-                        <i class="fas fa-note-sticky"></i>
-
-                        <textarea
-                            name="note"
-                            placeholder="Write note here..."
-                        ></textarea>
-
+                    <div class="form-group">
+                        <label><i class="fas fa-note-sticky"></i> Note (optional)</label>
+                        <div class="input-wrap textarea-wrap">
+                            <i class="fas fa-note-sticky input-icon"></i>
+                            <textarea
+                                name="note"
+                                placeholder="Add a note about this stock entry..."
+                            ></textarea>
+                        </div>
                     </div>
 
-                </div>
+                    <!-- SUBMIT -->
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        Add Stock
+                    </button>
 
-                <!-- BUTTON -->
-
-                <button
-                    type="submit"
-                    class="submit-btn"
-                >
-
-                    <i class="fas fa-plus-circle"></i>
-
-                    Add Stock
-
-                </button>
-
-            </form>
+                </form>
+            </div>
 
         </div>
 
+        <p class="watermark">ICE BAY &nbsp;·&nbsp; Adimalathura &nbsp;·&nbsp; Stock Manager</p>
     </div>
 
 </body>
-
 </html>

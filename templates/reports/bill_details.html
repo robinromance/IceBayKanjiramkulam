@@ -2,306 +2,654 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Bill Details</title>
-
+    <title>Bill Details — ICE BAY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
 
-        *{
+        :root {
+            --blue-dark:   #0a1628;
+            --blue-mid:    #0f2548;
+            --blue-accent: #1a6ef5;
+            --blue-glow:   #3d8bff;
+            --ice:         #e8f4ff;
+            --ice-soft:    #f0f8ff;
+            --gold:        #f5c842;
+            --gold-dark:   #c99f1a;
+            --white:       #ffffff;
+            --gray-100:    #f7f9fc;
+            --gray-200:    #eef1f6;
+            --gray-400:    #a0aec0;
+            --gray-600:    #4a5568;
+            --gray-800:    #1a202c;
+            --success:     #00c48c;
+            --radius-sm:   8px;
+            --radius-md:   14px;
+            --radius-lg:   22px;
+            --shadow-card: 0 8px 40px rgba(10, 22, 40, 0.12);
+            --shadow-glow: 0 0 60px rgba(26, 110, 245, 0.15);
+        }
+
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
         }
 
-        body{
-            background: #f4f6f9;
-            padding: 2rem;
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--blue-dark);
+            min-height: 100vh;
+            padding: 2.5rem 1.5rem;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        .bill-container{
+        /* ===== BACKGROUND TEXTURE ===== */
 
-            max-width: 900px;
-
-            margin: auto;
-
-            background: white;
-
-            border-radius: 15px;
-
-            padding: 2rem;
-
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(26,110,245,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(26,110,245,0.10) 0%, transparent 55%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .top-section{
+        /* ===== GRID LINES ===== */
 
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== WRAPPER ===== */
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        /* ===== CARD ===== */
+
+        .bill-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card), var(--shadow-glow);
+            animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HEADER ===== */
+
+        .card-header {
+            background: var(--blue-mid);
+            padding: 2.5rem 2.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 40px solid rgba(255,255,255,0.04);
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            right: 80px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 30px solid rgba(255,255,255,0.03);
+        }
+
+        .header-top {
             display: flex;
-
             justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 2rem;
-
-            border-bottom: 2px solid #eee;
-
-            padding-bottom: 1rem;
-
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1.5rem;
         }
 
-        .shop-name{
+        /* ===== BRAND ===== */
 
-            font-size: 2rem;
-
-            color: #2d3436;
-
-            font-weight: bold;
-
-        }
-
-        .bill-info h3{
-
-            margin-bottom: .5rem;
-
-            color: #555;
-
-        }
-
-        .bill-info span{
-
-            color: #000;
-
-            font-weight: bold;
-
-        }
-
-        table{
-
-            width: 100%;
-
-            border-collapse: collapse;
-
-            margin-top: 1rem;
-
-        }
-
-        table thead{
-
-            background: #0984e3;
-
-            color: white;
-
-        }
-
-        table th{
-
-            padding: 1rem;
-
-            font-size: 1rem;
-
-        }
-
-        table td{
-
-            padding: 1rem;
-
-            text-align: center;
-
-            border-bottom: 1px solid #eee;
-
-        }
-
-        table tbody tr:hover{
-
-            background: #f8f9fa;
-
-        }
-
-        .total-section{
-
-            margin-top: 2rem;
-
+        .brand {
             display: flex;
-
-            justify-content: flex-end;
-
+            flex-direction: column;
+            gap: 6px;
         }
 
-        .total-box{
-
-            background: #00b894;
-
-            color: white;
-
-            padding: 1rem 2rem;
-
-            border-radius: 10px;
-
-            font-size: 1.5rem;
-
-            font-weight: bold;
-
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245, 200, 66, 0.15);
+            border: 1px solid rgba(245, 200, 66, 0.3);
+            border-radius: 50px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            width: fit-content;
         }
 
-        .back-btn{
+        .brand-badge::before {
+            content: '❄';
+            font-size: 12px;
+        }
 
-            display: inline-block;
+        .brand-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.8rem;
+            color: var(--white);
+            line-height: 1;
+            letter-spacing: -1px;
+        }
 
-            margin-top: 2rem;
+        .brand-sub {
+            font-size: 13px;
+            color: var(--gray-400);
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
 
+        /* ===== BILL META ===== */
+
+        .bill-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            align-items: flex-end;
+        }
+
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: var(--radius-sm);
+            padding: 8px 16px;
+        }
+
+        .meta-pill .label {
+            font-size: 11px;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .meta-pill .value {
+            font-size: 15px;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* ===== STATUS BAR ===== */
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1.8rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 10px rgba(0, 196, 140, 0.6);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.6; transform: scale(0.85); }
+        }
+
+        .status-text {
+            font-size: 13px;
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        /* ===== BODY ===== */
+
+        .card-body {
+            padding: 2rem 2.5rem;
+        }
+
+        /* ===== TABLE ===== */
+
+        .table-wrap {
+            border-radius: var(--radius-md);
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--gray-100);
+        }
+
+        thead th {
+            padding: 14px 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            text-align: left;
+        }
+
+        thead th:last-child {
+            text-align: right;
+        }
+
+        tbody tr {
+            border-top: 1px solid var(--gray-200);
+            transition: background 0.15s;
+        }
+
+        tbody tr:hover {
+            background: var(--ice-soft);
+        }
+
+        tbody td {
+            padding: 16px 20px;
+            font-size: 15px;
+            color: var(--gray-800);
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        tbody td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: var(--blue-accent);
+        }
+
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            background: var(--ice);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .product-name {
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .qty-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-600);
+            min-width: 44px;
+        }
+
+        /* ===== FOOTER ===== */
+
+        .card-footer {
+            padding: 0 2.5rem 2.5rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin-bottom: 1.8rem;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             text-decoration: none;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
 
-            background: #2d3436;
+        .back-btn:hover {
+            background: var(--gray-200);
+            color: var(--gray-800);
+            transform: translateX(-3px);
+        }
 
+        .back-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ===== TOTAL BOX ===== */
+
+        .total-box {
+            background: var(--blue-mid);
+            border-radius: var(--radius-md);
+            padding: 1.2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .total-box::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 20px solid rgba(255,255,255,0.04);
+        }
+
+        .total-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .total-amount {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.2rem;
+            color: var(--white);
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .total-amount .currency {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            opacity: 0.7;
+            vertical-align: super;
+            margin-right: 2px;
+        }
+
+        /* ===== PRINT BUTTON ===== */
+
+        .print-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--blue-accent);
             color: white;
-
-            padding: .8rem 1.5rem;
-
-            border-radius: 8px;
-
-            transition: .3s;
-
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .back-btn:hover{
-
-            background: #000;
-
+        .print-btn:hover {
+            background: var(--blue-glow);
+            transform: translateY(-1px);
         }
 
-        @media(max-width:768px){
+        .print-btn svg {
+            width: 16px;
+            height: 16px;
+        }
 
-            .top-section{
+        /* ===== WATERMARK ===== */
 
-                flex-direction: column;
+        .watermark {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 12px;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
 
+        /* ===== MOBILE ===== */
+
+        @media (max-width: 600px) {
+
+            body { padding: 1rem; }
+
+            .card-header { padding: 1.8rem 1.5rem 1.5rem; }
+            .card-body   { padding: 1.5rem; }
+            .card-footer { padding: 0 1.5rem 1.5rem; }
+
+            .brand-name { font-size: 2rem; }
+
+            .bill-meta {
                 align-items: flex-start;
-
-                gap: 1rem;
-
             }
 
-            table th,
-            table td{
-
-                padding: .7rem;
-
-                font-size: .9rem;
-
+            .header-top {
+                flex-direction: column;
             }
 
+            thead th,
+            tbody td {
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            .total-amount { font-size: 1.8rem; }
+
+            .footer-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .back-btn,
+            .print-btn {
+                justify-content: center;
+            }
+        }
+
+        /* ===== PRINT ===== */
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            body::before,
+            body::after { display: none; }
+
+            .bill-card {
+                box-shadow: none;
+                border-radius: 0;
+                animation: none;
+            }
+
+            .card-header { background: #0f2548; -webkit-print-color-adjust: exact; }
+
+            .back-btn,
+            .print-btn,
+            .watermark { display: none; }
+
+            .total-box { background: #0f2548; -webkit-print-color-adjust: exact; }
         }
 
     </style>
-
 </head>
 
 <body>
 
-    <div class="bill-container">
+    <div class="wrapper">
 
-        <div class="top-section">
+        <div class="bill-card">
 
-            <div>
+            <!-- HEADER -->
+            <div class="card-header">
+                <div class="header-top">
 
-                <h1 class="shop-name">
-                    ICE BAY
-                </h1>
+                    <div class="brand">
+                        <span class="brand-badge">Adimalathura</span>
+                        <h1 class="brand-name">ICE BAY</h1>
+                        <p class="brand-sub">Professional Billing System</p>
+                    </div>
 
-                <p>
-                    Professional Billing System
-                </p>
+                    <div class="bill-meta">
+                        <div class="meta-pill">
+                            <span class="label">Bill No</span>
+                            <span class="value">{{ bill.bill_no }}</span>
+                        </div>
+                        <div class="meta-pill">
+                            <span class="label">Date</span>
+                            <span class="value">{{ bill.created_at }}</span>
+                        </div>
+                    </div>
 
+                </div>
+
+                <div class="status-bar">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Paid &amp; Confirmed</span>
+                </div>
             </div>
 
-            <div class="bill-info">
+            <!-- BODY -->
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr>
+                                <td>
+                                    <div class="product-cell">
+                                        <div class="product-icon">❄</div>
+                                        <span class="product-name">{{ item.product.name }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="qty-badge">{{ item.quantity }}</span>
+                                </td>
+                                <td>₹{{ item.price }}</td>
+                                <td>₹{{ item.total }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                <h3>
-                    Bill No:
-                    <span>
-                        {{ bill.bill_no }}
-                    </span>
-                </h3>
+            <!-- FOOTER -->
+            <div class="card-footer">
+                <div class="divider"></div>
+                <div class="footer-row">
 
-                <h3>
-                    Date:
-                    <span>
-                        {{ bill.created_at }}
-                    </span>
-                </h3>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <a href="{% url 'daily_reports' %}" class="back-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 12H5M12 5l-7 7 7 7"/>
+                            </svg>
+                            Back to Reports
+                        </a>
+                        <button class="print-btn" onclick="window.print()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 6 2 18 2 18 9"/>
+                                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                                <rect x="6" y="14" width="12" height="8"/>
+                            </svg>
+                            Print Bill
+                        </button>
+                    </div>
 
+                    <div class="total-box">
+                        <span class="total-label">Grand Total</span>
+                        <span class="total-amount">
+                            <span class="currency">₹</span>{{ bill.total_amount }}
+                        </span>
+                    </div>
+
+                </div>
             </div>
 
         </div>
 
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>Product</th>
-
-                    <th>Quantity</th>
-
-                    <th>Price</th>
-
-                    <th>Total</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                {% for item in items %}
-
-                <tr>
-
-                    <td>
-                        {{ item.product.name }}
-                    </td>
-
-                    <td>
-                        {{ item.quantity }}
-                    </td>
-
-                    <td>
-                        ₹{{ item.price }}
-                    </td>
-
-                    <td>
-                        ₹{{ item.total }}
-                    </td>
-
-                </tr>
-
-                {% endfor %}
-
-            </tbody>
-
-        </table>
-
-        <div class="total-section">
-
-            <div class="total-box">
-
-                Grand Total:
-                ₹{{ bill.total_amount }}
-
-            </div>
-
-        </div>
-
-        <a href="{% url 'daily_reports' %}" class="back-btn">
-
-            ← Back to Reports
-
-        </a>
+        <p class="watermark">ICE BAY &nbsp;·&nbsp; Adimalathura &nbsp;·&nbsp; Billing System</p>
 
     </div>
 
