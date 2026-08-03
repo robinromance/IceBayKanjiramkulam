@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} — ICE BAY</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7fb; color: #1f2937; margin: 0; padding: 24px; }
+        .container { max-width: 1000px; margin: 0 auto; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(15,23,42,0.12); }
+        .header { padding: 32px 40px; background: #0f2548; color: #fff; }
+        .header h1 { margin: 0; font-size: 2rem; letter-spacing: -0.04em; }
+        .header p { margin: 8px 0 0; color: #cfd8fb; }
+        .section { padding: 32px 40px; }
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; margin-bottom: 24px; }
+        .card { background: #eef2ff; border-radius: 18px; padding: 20px; }
+        .card strong { display: block; font-size: 12px; color: #64748b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em; }
+        .value { font-size: 1.8rem; font-weight: 700; color: #0f172a; }
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { padding: 16px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { color: #475569; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+        td { color: #0f172a; }
+        .td-right { text-align: right; }
+        .back-button { display: inline-flex; align-items: center; justify-content: center; margin-top: 20px; text-decoration: none; padding: 12px 20px; border-radius: 999px; border: 1px solid #0f172a; color: #0f172a; background: #ffffff; font-weight: 600; }
+        .empty { padding: 40px; text-align: center; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ title }}</h1>
+            <p>{{ subtitle }}</p>
+        </div>
+        <div class="section">
+            <div class="summary-grid">
+                <div class="card">
+                    <strong>Total Bills</strong>
+                    <div class="value">{{ bills|length }}</div>
+                </div>
+                <div class="card">
+                    <strong>Grand Total</strong>
+                    <div class="value">₹{{ grand_total|floatformat:2 }}</div>
+                </div>
+            </div>
+            {% if product_sales %}
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th class="td-right">Qty</th>
+                            <th class="td-right">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in product_sales %}
+                        <tr>
+                            <td>{{ item.product__name }}</td>
+                            <td class="td-right">{{ item.total_qty }}</td>
+                            <td class="td-right">₹{{ item.total_price|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            {% if bills %}
+            <div class="table-wrap" style="margin-top:24px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bill #</th>
+                            <th class="td-right">Time</th>
+                            <th class="td-right">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for bill in bills %}
+                        <tr>
+                            <td>{{ bill.bill_no }}</td>
+                            <td class="td-right">{{ bill.created_at|date:"h:i A" }}</td>
+                            <td class="td-right">₹{{ bill.total_amount|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            {% if not bills and not product_sales %}
+            <div class="empty">
+                No sales data for this period.
+            </div>
+            {% endif %}
+            <a href="{% url back_url %}" class="back-button">{{ back_text }}</a>
+        </div>
+    </div>
+</body>
+</html>

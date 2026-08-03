@@ -284,6 +284,84 @@
             padding: 2rem 2.5rem;
         }
 
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1.8rem 0 2rem;
+        }
+
+        .tab-btn {
+            border: none;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            padding: 10px 18px;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: var(--blue-accent);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .filter-controls {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .filter-input {
+            width: 100%;
+            border-radius: 999px;
+            border: 1px solid var(--gray-200);
+            padding: 12px 16px;
+            background: var(--white);
+            color: var(--gray-800);
+            font-size: 0.95rem;
+            box-shadow: inset 0 2px 6px rgba(15, 23, 42, 0.05);
+        }
+
+        .report-panel {
+            display: none;
+        }
+
+        .report-panel.active {
+            display: block;
+        }
+
+        .table-wrap table {
+            transition: transform 0.2s ease;
+        }
+
+        .table-wrap tr:hover {
+            transform: translateX(4px);
+            background: rgba(26, 110, 245, 0.04);
+        }
+
+        .view-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--blue-accent);
+            color: #fff;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .view-btn:hover {
+            background: var(--blue-glow);
+        }
+
         /* ===== TABLE ===== */
 
         .table-wrap {
@@ -816,7 +894,7 @@
 
             <div class="bills-section">
                 {% for bill in bills %}
-                <a href="{% url 'bill_detail' bill.id %}" class="bill-row">
+                <a href="{% url 'billings:bill_detail' bill.id %}" class="bill-row">
                     <div class="bill-row-left">
                         <div class="bill-icon">🧾</div>
                         <div>
@@ -838,13 +916,92 @@
             </div>
             {% endif %}
 
+            <!-- DAY-BY-DAY SUMMARY -->
+            <div class="section-divider" style="margin-top:1.6rem;">
+                <span class="section-title">Day-by-Day (Last 30 days)</span>
+                <span class="section-line"></span>
+            </div>
+
+            <div class="card-body">
+                {% if day_by_day %}
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th style="text-align:right;">Bills</th>
+                                <th style="text-align:right;">Total</th>
+                                <th style="text-align:right;">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for d in day_by_day %}
+                            <tr>
+                                <td>{{ d.date|date:"d M Y" }}</td>
+                                <td style="text-align:right;">{{ d.bills }}</td>
+                                <td style="text-align:right;">₹{{ d.total|floatformat:2 }}</td>
+                                <td style="text-align:right;">
+                                    <a href="{% url 'billings:daily_report_day' d.date|date:'Y-m-d' %}" class="view-btn" style="padding:6px 12px; border-radius:8px;">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📅</div>
+                    <p>No data for recent days.</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- MONTHLY SUMMARY -->
+            <div class="section-divider" style="margin-top:1.6rem;">
+                <span class="section-title">Monthly (Last 12 months)</span>
+                <span class="section-line"></span>
+            </div>
+
+            <div class="card-body">
+                {% if monthly %}
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th style="text-align:right;">Bills</th>
+                                <th style="text-align:right;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for m in monthly %}
+                            <tr>
+                                <td>{{ m.month|date:"M Y" }}</td>
+                                <td style="text-align:right;">{{ m.bills }}</td>
+                                <td style="text-align:right;">₹{{ m.total|floatformat:2 }}</td>
+                                <td style="text-align:right;">
+                                    <a href="{% url 'billings:monthly_report' m.month|date:'Y' m.month|date:'n' %}" class="view-btn" style="padding:6px 12px; border-radius:8px;">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">🗓️</div>
+                    <p>No monthly data available.</p>
+                </div>
+                {% endif %}
+            </div>
+
             <!-- FOOTER -->
             <div class="card-footer">
                 <div class="divider"></div>
                 <div class="footer-row">
 
                     <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                        <a href="{% url 'billing_page' %}" class="back-btn">
+                        <a href="{% url 'billings:billing_page' %}" class="back-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M19 12H5M12 5l-7 7 7 7"/>
                             </svg>

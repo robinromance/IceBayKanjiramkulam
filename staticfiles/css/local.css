@@ -1,0 +1,31 @@
+/* Local overrides for icons and small UI tweaks */
+.icon {
+	width: 18px;
+	height: 18px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+/* allow easy size modifiers */
+.icon.small  { width: 14px; height: 14px; }
+.icon.medium { width: 20px; height: 20px; }
+.icon.large  { width: 24px; height: 24px; }
+
+/* ensure svg color follows text color when using currentColor */
+.icon[fill="currentColor"], .icon[stroke="currentColor"] {
+	color: inherit;
+}
+
+/* input icons absolute positioning */
+.input-icon.icon {
+	left: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/* small helper for nav icons */
+.nav-link .icon { width: 18px; height: 18px; margin-right: 8px; }
+
+/* toast icon sizing */
+.toast .icon { width: 20px; height: 20px; margin-right: 8px; }
+

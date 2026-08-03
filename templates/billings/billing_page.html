@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-
         :root {
             --bg:          #0c0f1a;
             --surface:     #131729;
@@ -41,7 +40,6 @@
         }
 
         /* ─── SIDEBAR ─── */
-
         .sidebar {
             width: var(--sidebar-w);
             height: 100vh;
@@ -121,12 +119,10 @@
         }
 
         .nav-link i { width: 18px; text-align: center; font-size: 13px; }
-
         .nav-link:hover, .nav-link.active { background: var(--surface-2); color: var(--white); }
         .nav-link.active i { color: var(--accent); }
 
         /* PRICE FILTERS */
-
         .filter-section {
             padding: 6px 12px 14px;
             margin-top: auto;
@@ -167,7 +163,6 @@
         .filter-btn.all-btn { grid-column: 1 / -1; }
 
         /* ─── MAIN ─── */
-
         .main {
             margin-left: var(--sidebar-w);
             min-height: 100vh;
@@ -176,19 +171,19 @@
         }
 
         /* TOPBAR */
-
         .topbar {
-            padding: 16px 24px;
+            padding: 12px 10px;
             border-bottom: 1px solid var(--border);
             background: var(--surface);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: 10px;
             position: sticky;
             top: 0;
             z-index: 100;
             flex-shrink: 0;
+            flex-wrap: wrap;
         }
 
         .topbar-left h2 {
@@ -230,6 +225,202 @@
 
         .search-wrap input::placeholder { color: var(--text-3); }
 
+        /* CUSTOMER DETAILS & ACTIONS */
+        .topbar-bottom {
+            width: 100%;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .customer-section {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .customer-left {
+            flex: 1;
+        }
+
+        .customer-right {
+            width: 150px;
+        }
+
+        .customer-section label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--text-2);
+        }
+
+        .customer-section input {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            color: var(--text-1);
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .customer-section input::placeholder {
+            color: var(--text-3);
+        }
+
+        .bill-action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .hold-btn, .held-btn {
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .hold-btn {
+            background: var(--amber);
+        }
+
+        .hold-btn:hover {
+            background: #e8960a;
+            transform: translateY(-2px);
+        }
+
+        .held-btn {
+            background: var(--accent);
+        }
+
+        .held-btn:hover {
+            background: #3d6dcc;
+            transform: translateY(-2px);
+        }
+
+        /* MODAL STYLES */
+        .held-modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            overflow-y: auto;
+        }
+
+        .held-container {
+            background: var(--surface);
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .held-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .held-header h2 {
+            color: var(--white);
+            font-family: 'Syne', sans-serif;
+        }
+
+        .closeHeld {
+            border: none;
+            background: var(--red);
+            color: white;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .closeHeld:hover {
+            background: #e63946;
+        }
+
+        #searchHold {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-1);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .held-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-1);
+        }
+
+        .held-table th {
+            background: var(--surface-2);
+            color: var(--white);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .held-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .recallBtn, .deleteBtn {
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-right: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .recallBtn {
+            background: var(--accent-2);
+        }
+
+        .recallBtn:hover {
+            background: #00c789;
+            transform: translateY(-2px);
+        }
+
+        .deleteBtn {
+            background: var(--red);
+        }
+
+        .deleteBtn:hover {
+            background: #e63946;
+            transform: translateY(-2px);
+        }
+
         .topbar-stats { display: flex; gap: 8px; }
 
         .stat-pill {
@@ -247,20 +438,16 @@
         .stat-pill strong { font-size: 14px; font-weight: 600; color: var(--white); }
 
         /* ─── CONTENT ─── */
-
-        .content { flex: 1; display: flex; }
+        .content { flex: 1; display: flex; min-height: 0; min-width: 0; }
 
         /* PRODUCT PANEL */
-
-        .product-panel { flex: 1; padding: 20px; overflow-y: auto; }
+        .product-panel { flex: 1; min-width: 0; padding: 20px; overflow-y: auto; }
 
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 14px;
         }
-
-        /* ── PRODUCT CARD: 2×2 grid layout ── */
 
         .product-card {
             background: var(--surface);
@@ -282,7 +469,6 @@
             box-shadow: 0 4px 16px rgba(0,0,0,0.25);
         }
 
-        /* top-left */
         .product-card-name {
             grid-column: 1; grid-row: 1;
             font-family: 'Syne', sans-serif;
@@ -292,7 +478,6 @@
             line-height: 1.3;
         }
 
-        /* top-right */
         .stock-tag {
             grid-column: 2; grid-row: 1;
             display: inline-flex;
@@ -310,7 +495,6 @@
         .stock-tag.low   { background: rgba(255,179,71,0.1);  color: var(--amber); }
         .stock-tag.empty { background: rgba(255,77,109,0.1);  color: var(--red); }
 
-        /* bottom-left */
         .product-card-price {
             grid-column: 1; grid-row: 2;
             font-size: 1.4rem;
@@ -327,7 +511,6 @@
             color: var(--text-3);
         }
 
-        /* bottom-right */
         .qty-wrap {
             grid-column: 2; grid-row: 2;
             display: inline-flex;
@@ -373,10 +556,10 @@
             flex-shrink: 0;
         }
 
-        /* ─── CART PANEL (desktop) ─── */
-
+        /* ─── CART PANEL ─── */
         .cart-panel {
             width: 320px;
+            min-width: 320px;
             border-left: 1px solid var(--border);
             background: var(--surface);
             display: flex;
@@ -416,9 +599,9 @@
 
         .cart-toggle-icon { display: none; }
 
-        /* scrollable body */
         .cart-body {
             flex: 1;
+            min-height: 0;
             overflow-y: auto;
             overflow-x: hidden;
             scroll-behavior: smooth;
@@ -430,7 +613,7 @@
         .cart-body::-webkit-scrollbar-track { background: transparent; }
         .cart-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-        .cart-items { padding: 12px; flex-shrink: 0; }
+        .cart-items { padding: 12px; flex-shrink: 0; width: 100%; }
 
         .cart-empty {
             display: flex;
@@ -455,6 +638,8 @@
             margin-bottom: 8px;
             background: var(--surface-2);
             animation: fadeIn 0.2s ease;
+            width: 100%;
+            justify-content: space-between;
         }
 
         @keyframes fadeIn {
@@ -462,11 +647,10 @@
             to   { opacity:1; transform:translateY(0); }
         }
 
-        .cart-item-name  { flex:1; font-size:13px; font-weight:500; color:var(--text-1); }
+        .cart-item-name  { flex:1; min-width: 0; font-size:13px; font-weight:500; color:var(--text-1); }
         .cart-item-qty   { font-size:12px; color:var(--text-3); background:var(--surface); padding:2px 8px; border-radius:6px; }
         .cart-item-total { font-size:13px; font-weight:600; color:var(--accent); min-width:52px; text-align:right; }
 
-        /* cart footer */
         .cart-foot {
             padding: 16px 20px;
             border-top: 1px solid var(--border);
@@ -519,6 +703,28 @@
 
         .bill-btn:hover   { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); }
         .bill-btn:active  { transform: translateY(0); }
+        .bill-btn:disabled {
+            opacity: 0.75;
+            cursor: default;
+            box-shadow: none;
+        }
+        .bill-btn.loading {
+            position: relative;
+            color: rgba(255,255,255,0.9);
+        }
+        .bill-btn.loading::after {
+            content: '';
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.6);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 6px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
 
         .clear-btn {
             width: 100%;
@@ -538,7 +744,6 @@
         .clear-btn:hover { border-color: var(--red); color: var(--red); }
 
         /* ─── TOAST ─── */
-
         .toast {
             position: fixed;
             bottom: 24px;
@@ -564,188 +769,69 @@
         .toast.success i { color: var(--accent-2); }
         .toast.error   i { color: var(--red); }
 
-        /* ═══════════════════════════════════════
-           TABLET  ≤ 900px
-        ═══════════════════════════════════════ */
-
+        /* RESPONSIVE */
         @media (max-width: 900px) {
-
-            /* Sidebar: icons only */
-            .sidebar { width: 56px; }
-            .sidebar-logo { padding: 12px 8px; }
-            .logo-name, .logo-sub, .logo-badge, .nav-label { display: none; }
-            .nav-link { justify-content: center; padding: 12px 8px; }
+            .sidebar { width: 72px; }
+            .logo-name, .logo-sub, .nav-label, .filter-label { display: none; }
+            .logo-badge { justify-content: center; padding: 16px 0; }
+            .logo-badge::before { margin-right: 0; }
             .nav-link span { display: none; }
-            .nav-link i { width: auto; font-size: 18px; }
-            .filter-section { padding: 6px 6px 10px; margin-top: auto; }
-            .filter-label { display: none; }
-            .filter-grid { grid-template-columns: 1fr; gap: 4px; }
-            .filter-btn { font-size: 12px; padding: 8px 4px; }
-            .filter-btn.all-btn { grid-column: 1; }
-
-            .main { margin-left: 56px; }
-            .topbar { padding: 12px 16px; gap: 10px; }
-            .topbar-left p { display: none; }
-            .topbar-stats { display: none; }
-            .search-wrap { max-width: none; }
-
-            /* 2 columns */
-            .product-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .nav-link { justify-content: center; padding: 14px 0; }
+            .filter-section { display: block; order: -1; padding: 10px 0 6px; border-top: none; }
+            .filter-grid { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+            .filter-btn { width: 100%; max-width: 64px; min-width: 64px; padding: 10px 0; font-size: 12px; }
+            .filter-btn.all-btn { width: 100%; max-width: 64px; }
+            .main { margin-left: 72px; }
+            .topbar { flex-wrap: wrap; }
+            .topbar-bottom { margin-top: 12px; }
+            .product-grid { grid-template-columns: 1fr 1fr; }
             .product-panel { padding: 14px; padding-bottom: calc(50vh + 20px); }
-
-            /* Bigger qty for touch */
-            .qty-wrap button { width: 42px; height: 42px; font-size: 20px; }
-            .qty-wrap .qty-val { width: 40px; font-size: 16px; line-height: 42px; }
-
-            /* ── CART: fixed bottom drawer ── */
             .cart-panel {
                 position: fixed;
                 bottom: 0;
-                left: 56px;
+                left: 72px;
                 right: 0;
                 width: auto;
                 height: auto;
                 top: auto;
-                max-height: 54px;        /* collapsed: header only */
+                max-height: 54px;
                 border-left: none;
                 border-top: 1px solid var(--border);
                 border-radius: 20px 20px 0 0;
                 z-index: 150;
-                overflow: hidden;
-                transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1);
                 box-shadow: 0 -6px 30px rgba(0,0,0,0.4);
             }
-
-            /* expanded: grows up to 50vh = middle of screen */
             .cart-panel.expanded { max-height: 50vh; }
-
-            .cart-body {
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-                max-height: calc(50vh - 54px);
-            }
-
-            /* head: tap to toggle */
-            .cart-head {
-                cursor: pointer;
-                user-select: none;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 14px 20px;
-                flex-shrink: 0;
-            }
-
-            .cart-toggle-icon {
-                display: block;
-                font-size: 13px;
-                color: var(--text-3);
-                transition: transform 0.3s;
-            }
-
+            .cart-body { max-height: calc(50vh - 54px); }
+            .cart-head { cursor: pointer; user-select: none; display: flex; justify-content: space-between; }
+            .cart-toggle-icon { display: block; }
             .cart-panel.expanded .cart-toggle-icon { transform: rotate(180deg); }
-
-            .cart-foot { padding: 12px 16px; }
-            .bill-btn  { padding: 14px; font-size: 15px; }
-            .clear-btn { padding: 11px; font-size: 13px; }
         }
-
-        /* ═══════════════════════════════════════
-           MOBILE  ≤ 600px
-        ═══════════════════════════════════════ */
 
         @media (max-width: 600px) {
-
             body { font-size: 15px; }
-
             .sidebar { width: 50px; }
-            .nav-link { padding: 11px 6px; }
-            .nav-link i { font-size: 16px; }
-            .filter-btn { font-size: 15px; padding: 8px 4px; }
-            .filter-section { padding: 6px 6px 10px; margin-top: 5rem; }
-            
-
             .main { margin-left: 50px; }
-
-            .topbar { padding: 10px 12px; gap: 8px; }
-            .topbar-left h2 { font-size: 0.95rem; }
-            .search-wrap input { font-size: 14px; padding: 9px 12px 9px 32px; }
-
-            /* Single column */
-            .product-grid { grid-template-columns: 1fr; gap: 10px; }
+            .topbar { padding: 10px 12px; }
+            .topbar-bottom { margin-top: 10px; gap: 10px; }
+            .customer-right { width: 120px; }
+            .product-grid { grid-template-columns: 1fr; }
             .product-panel { padding: 12px; padding-bottom: calc(50vh + 20px); }
-
-            /* Card touch-friendly */
-            .product-card { padding: 14px; row-gap: 12px; }
-            .product-card-name  { font-size: 1rem; }
-            .product-card-price { font-size: 1.3rem; }
-
-            /* Large qty buttons */
-            .qty-wrap button   { width: 48px; height: 48px; font-size: 24px; }
-            .qty-wrap .qty-val { width: 46px; font-size: 18px; font-weight: 700; line-height: 48px; }
-
-            /* Cart drawer */
-            .cart-panel {
-                position: fixed;
-                bottom: 0;
-                left: 50px;
-                right: 0;
-                width: auto;
-                height: auto;
-                top: auto;
-                max-height: 54px;        /* collapsed: header only */
-                border-left: none;
-                border-top: 1px solid var(--border);
-                border-radius: 18px 18px 0 0;
-                z-index: 150;
-                overflow: hidden;
-                transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1);
-                box-shadow: 0 -6px 30px rgba(0,0,0,0.4);
-            }
-
-            /* expanded: stops at 50vh = mid screen, never goes to top */
+            .qty-wrap button { width: 40px; height: 40px; font-size: 18px; }
+            .qty-wrap .qty-val { width: 36px; line-height: 40px; }
+            .cart-panel { left: 50px; border-radius: 18px 18px 0 0; }
             .cart-panel.expanded { max-height: 50vh; }
-
-            .cart-body {
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-                max-height: calc(50vh - 54px);
-            }
-
-            .cart-head {
-                cursor: pointer;
-                user-select: none;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 13px 16px;
-                flex-shrink: 0;
-            }
-
-            .cart-toggle-icon {
-                display: block;
-                font-size: 13px;
-                color: var(--text-3);
-                transition: transform 0.3s;
-            }
-
-            .cart-panel.expanded .cart-toggle-icon { transform: rotate(180deg); }
-
-            .cart-item-row    { padding: 12px; margin-bottom: 8px; }
-            .cart-item-name   { font-size: 14px; }
-            .cart-item-qty    { font-size: 13px; padding: 3px 8px; }
-            .cart-item-total  { font-size: 14px; }
-            .cart-total-row.grand { font-size: 18px; }
-
-            .cart-foot { padding: 12px 14px; }
-            .bill-btn  { padding: 15px; font-size: 15px; }
-            .clear-btn { padding: 12px; font-size: 13px; margin-top: 6px; }
+            .cart-body { max-height: calc(50vh - 54px); }
+            .held-container { width: 95%; margin: 20px auto; padding: 15px; }
+            .held-table { font-size: 12px; }
+            .held-table th, .held-table td { padding: 8px; }
+            .recallBtn, .deleteBtn { padding: 4px 8px; font-size: 11px; }
         }
-
     </style>
 </head>
 <body>
 
+    <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="sidebar-logo">
             <div class="logo-badge">Live</div>
@@ -754,11 +840,11 @@
         </div>
         <div class="nav-section">
             <div class="nav-label">Navigation</div>
-            <a href="/" class="nav-link active"><i class="fas fa-house"></i><span>Dashboard</span></a>
-            <a href="{% url 'daily_reports' %}" class="nav-link"><i class="fas fa-chart-line"></i><span>Reports</span></a>
-            <a href="{% url 'remaining_stock' %}" class="nav-link"><i class="fas fa-boxes-stacked"></i><span>Stock</span></a>
-            <a href="{% url 'finished_stocks' %}" class="nav-link"><i class="fas fa-circle-xmark"></i><span>Finished</span></a>
-            <a href="{% url 'add_stock_page' %}" class="nav-link"><i class="fas fa-plus-circle"></i><span>Add Stock</span></a>
+            <a href="{% url 'billings:billing_page' %}" class="nav-link active"><i class="fas fa-house"></i><span>Dashboard</span></a>
+            <a href="{% url 'billings:daily_reports' %}" class="nav-link"><i class="fas fa-chart-line"></i><span>Reports</span></a>
+            <a href="{% url 'billings:remaining_stock' %}" class="nav-link"><i class="fas fa-boxes-stacked"></i><span>Stock</span></a>
+            <a href="{% url 'billings:finished_stocks' %}" class="nav-link"><i class="fas fa-circle-xmark"></i><span>Finished</span></a>
+            <a href="{% url 'billings:add_stock_page' %}" class="nav-link"><i class="fas fa-plus-circle"></i><span>Add Stock</span></a>
         </div>
         <div class="filter-section">
             <div class="filter-label">Filter by Price</div>
@@ -771,15 +857,18 @@
                 <button class="filter-btn" onclick="filterByPrice(30,this)">₹30</button>
                 <button class="filter-btn" onclick="filterByPrice(35,this)">₹35</button>
                 <button class="filter-btn" onclick="filterByPrice(40,this)">₹40</button>
+                <button class="filter-btn" onclick="filterByPrice('others',this)">Others</button>
             </div>
         </div>
     </div>
 
+    <!-- MAIN CONTENT -->
     <div class="main">
 
+        <!-- TOPBAR -->
         <div class="topbar">
             <div class="topbar-left">
-                <h2>Billing Dashboard</h2>
+                <h2>ICE BAY Billing</h2>
                 <p id="topbarDate">Loading...</p>
             </div>
             <div class="search-wrap">
@@ -796,10 +885,53 @@
                     Cart: <strong id="statCartCount">0</strong>
                 </div>
             </div>
+
+            <!-- CUSTOMER SECTION & ACTIONS -->
+            <div class="topbar-bottom">
+                <div class="customer-section">
+                    <div class="customer-left">
+                        <label>Customer Name</label>
+                        <input type="text" id="customerName" placeholder="Walk-in Customer" autocomplete="off">
+                    </div>
+                    <div class="customer-right">
+                        <label>Hold Number</label>
+                        <input type="text" id="holdNumber" readonly value="NEW">
+                    </div>
+                </div>
+                <div class="bill-action-buttons">
+                    <button class="hold-btn" onclick="holdBill()"><i class="fas fa-pause"></i> Hold Bill</button>
+                    <button class="held-btn" onclick="loadHeldBills()"><i class="fas fa-list"></i> Held Bills</button>
+                </div>
+            </div>
         </div>
 
+        <!-- HELD BILLS MODAL -->
+        <div id="heldBillModal" class="held-modal">
+            <div class="held-container">
+                <div class="held-header">
+                    <h2>Held Bills</h2>
+                    <button class="closeHeld" onclick="closeHeldBills()">✕</button>
+                </div>
+                <input type="text" id="searchHold" placeholder="Search Customer..." onkeyup="searchHoldBill()">
+                <table class="held-table">
+                    <thead>
+                        <tr>
+                            <th>Hold No</th>
+                            <th>Customer</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="heldBillTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CONTENT AREA -->
         <div class="content">
 
+            <!-- PRODUCTS PANEL -->
             <div class="product-panel">
                 <div class="product-grid" id="productGrid">
                     {% for product in products %}
@@ -810,14 +942,8 @@
                         data-id="{{ product.id }}"
                         {% if product.stock_quantity == 0 %}style="display:none;"{% endif %}
                     >
-                        <!-- top-left: name -->
                         <div class="product-card-name">{{ product.name }}</div>
-
-                        <!-- top-right: stock tag -->
-                        <span
-                            class="stock-tag {% if product.stock_quantity == 0 %}empty{% elif product.stock_quantity < 5 %}low{% else %}ok{% endif %}"
-                            id="stock-tag-{{ product.id }}"
-                        >
+                        <span class="stock-tag {% if product.stock_quantity == 0 %}empty{% elif product.stock_quantity < 5 %}low{% else %}ok{% endif %}" id="stock-tag-{{ product.id }}">
                             {% if product.stock_quantity == 0 %}
                                 <i class="fas fa-xmark"></i> Out of Stock
                             {% elif product.stock_quantity < 5 %}
@@ -826,28 +952,18 @@
                                 <i class="fas fa-check"></i> {{ product.stock_quantity }} left
                             {% endif %}
                         </span>
-
-                        <!-- bottom-left: price -->
-                        <div class="product-card-price">
-                            ₹{{ product.price }} <span>/ unit</span>
-                        </div>
-
-                        <!-- bottom-right: qty controls -->
+                        <div class="product-card-price">₹{{ product.price }} <span>/ unit</span></div>
                         <div class="qty-wrap">
                             <button class="btn-minus" onclick="decrease({{ product.id }})">−</button>
                             <span class="qty-val" id="qty-{{ product.id }}">0</span>
-                            <button
-                                class="btn-plus"
-                                id="inc-btn-{{ product.id }}"
-                                onclick="increase({{ product.id }})"
-                                {% if product.stock_quantity == 0 %}style="opacity:0.3;pointer-events:none;"{% endif %}
-                            >+</button>
+                            <button class="btn-plus" id="inc-btn-{{ product.id }}" onclick="increase({{ product.id }})" {% if product.stock_quantity == 0 %}style="opacity:0.3;pointer-events:none;"{% endif %}>+</button>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
 
+            <!-- CART PANEL -->
             <div class="cart-panel" id="cartPanel">
                 <div class="cart-head" onclick="toggleCart()">
                     <h3>
@@ -883,6 +999,7 @@
         </div>
     </div>
 
+    <!-- TOAST NOTIFICATION -->
     <div class="toast" id="toast">
         <i class="fas fa-circle-check"></i>
         <span id="toastMsg">Done</span>
@@ -890,10 +1007,14 @@
 
     <script>
 
+        /* ═══════════════════════════════════════════════════════════
+           PRODUCT DATA & CART INITIALIZATION
+        ═══════════════════════════════════════════════════════════ */
+
         const productData = {
             {% for product in products %}
             "{{ product.id }}": {
-                name:  "{{ product.name }}",
+                name: "{{ product.name }}",
                 price: parseFloat("{{ product.price }}"),
                 stock: parseInt("{{ product.stock_quantity }}")
             }{% if not forloop.last %},{% endif %}
@@ -901,28 +1022,36 @@
         };
 
         const cart = {};
+        let currentHoldId = null;
 
         document.getElementById("topbarDate").textContent =
             new Date().toLocaleDateString("en-IN", {
-                weekday:"long", day:"numeric", month:"long", year:"numeric"
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric"
             });
 
-        document.getElementById("statProducts").textContent =
-            Object.keys(productData).length;
+        document.getElementById("statProducts").textContent = Object.keys(productData).length;
 
-        // ── TOAST ──
+        /* ═══════════════════════════════════════════════════════════
+           TOAST NOTIFICATIONS
+        ═══════════════════════════════════════════════════════════ */
 
-        function showToast(msg, type="success") {
+        function showToast(msg, type = "success") {
             const t = document.getElementById("toast");
             t.className = `toast ${type}`;
             t.querySelector("i").className = type === "success"
-                ? "fas fa-circle-check" : "fas fa-circle-xmark";
+                ? "fas fa-circle-check"
+                : "fas fa-circle-xmark";
             document.getElementById("toastMsg").textContent = msg;
             t.classList.add("show");
             setTimeout(() => t.classList.remove("show"), 2800);
         }
 
-        // ── STOCK TAG ──
+        /* ═══════════════════════════════════════════════════════════
+           STOCK TAG UPDATE
+        ═══════════════════════════════════════════════════════════ */
 
         function updateStockTag(id, stock) {
             const tag = document.getElementById(`stock-tag-${id}`);
@@ -939,7 +1068,9 @@
             }
         }
 
-        // ── CARD VISIBILITY ──
+        /* ═══════════════════════════════════════════════════════════
+           CARD VISIBILITY
+        ═══════════════════════════════════════════════════════════ */
 
         function refreshCardVisibility(id) {
             const card = document.querySelector(`.product-card[data-id="${id}"]`);
@@ -947,12 +1078,12 @@
             card.style.display = productData[id].stock > 0 ? "" : "none";
         }
 
-        // ── CART UI ──
+        /* ═══════════════════════════════════════════════════════════
+           CART UI UPDATE
+        ═══════════════════════════════════════════════════════════ */
 
         function updateCart() {
             const container = document.getElementById("cartItems");
-            const empty     = document.getElementById("cartEmpty");
-            const panel     = document.getElementById("cartPanel");
             let total = 0, itemCount = 0, html = "";
 
             for (const id in cart) {
@@ -971,44 +1102,117 @@
             }
 
             if (itemCount === 0) {
-                container.innerHTML = "";
-                container.appendChild(empty);
-                empty.style.display = "flex";
-                // collapse on mobile when empty
-                if (window.innerWidth <= 900) panel.classList.remove("expanded");
+                container.innerHTML = `
+                    <div class="cart-empty" id="cartEmpty">
+                        <i class="fas fa-basket-shopping"></i>
+                        <p>No items added yet</p>
+                    </div>`;
+                if (window.innerWidth <= 900) document.getElementById("cartPanel").classList.remove("expanded");
             } else {
-                empty.style.display = "none";
                 container.innerHTML = html;
-                container.appendChild(empty);
-                const body = document.getElementById("cartBody");
-                if (body) body.scrollTop = body.scrollHeight;
             }
 
-            document.getElementById("cartTotal").textContent     = total.toFixed(2);
-            document.getElementById("cartCount").textContent     = itemCount;
+            document.getElementById("cartTotal").textContent = total.toFixed(2);
+            document.getElementById("cartCount").textContent = itemCount;
             document.getElementById("statCartCount").textContent = itemCount;
         }
 
-        // ── INCREASE ──
+        /* ═══════════════════════════════════════════════════════════
+           INCREASE QUANTITY - FIXED FOR HOLD BILLS
+        ═══════════════════════════════════════════════════════════ */
 
         function increase(id) {
             const p = productData[id];
-            if (p.stock <= 0) { showToast("Stock finished!", "error"); return; }
+            if (p.stock <= 0) {
+                showToast("Stock finished!", "error");
+                return;
+            }
+
             if (!cart[id]) cart[id] = 0;
+            
+            // ╔════════════════════════════════════════════════════════════╗
+            // ║ IF ADDING TO RECALLED HELD BILL, SYNC WITH BACKEND        ║
+            // ╚════════════════════════════════════════════════════════════╝
+            if (currentHoldId) {
+                addItemToHeldBill(id, 1);
+                return;
+            }
+
+            // Otherwise, add locally (normal flow)
             cart[id]++;
             p.stock--;
             document.getElementById(`qty-${id}`).textContent = cart[id];
             updateStockTag(id, p.stock);
             if (p.stock === 0) {
                 const btn = document.getElementById(`inc-btn-${id}`);
-                if (btn) { btn.style.opacity="0.3"; btn.style.pointerEvents="none"; }
+                if (btn) {
+                    btn.style.opacity = "0.3";
+                    btn.style.pointerEvents = "none";
+                }
                 refreshCardVisibility(id);
             }
             updateCart();
             autoExpandCart();
         }
 
-        // ── DECREASE ──
+        /* ═══════════════════════════════════════════════════════════
+           ADD ITEM TO HELD BILL (NEW - SYNC WITH BACKEND)
+        ═══════════════════════════════════════════════════════════ */
+
+        function addItemToHeldBill(productId, qty) {
+            // Update local cart/stock immediately
+            if (!cart[productId]) cart[productId] = 0;
+            cart[productId] += qty;
+            if (productData[productId]) {
+                productData[productId].stock -= qty;
+            }
+            const qtyEl = document.getElementById(`qty-${productId}`);
+            if (qtyEl) qtyEl.textContent = cart[productId];
+            if (productData[productId]) updateStockTag(productId, productData[productId].stock);
+            if (productData[productId] && productData[productId].stock === 0) {
+                const btn = document.getElementById(`inc-btn-${productId}`);
+                if (btn) {
+                    btn.style.opacity = "0.3";
+                    btn.style.pointerEvents = "none";
+                }
+                refreshCardVisibility(productId);
+            }
+            updateCart();
+            autoExpandCart();
+
+            // Send full cart to the update endpoint (backend replaces items)
+            const cartArray = Object.entries(cart)
+                .filter(([, q]) => q > 0)
+                .map(([pid, q]) => ({ product_id: parseInt(pid), qty: parseInt(q) }));
+
+            fetch(`/api/update-hold-bill/${currentHoldId}/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    customer_name: document.getElementById("customerName").value,
+                    cart: cartArray
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message || "Held bill updated");
+                } else {
+                    showToast(data.error || "Error updating held bill", "error");
+                }
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                showToast("Network error", "error");
+            });
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           DECREASE QUANTITY - SYNCS WITH HELD BILLS
+        ═══════════════════════════════════════════════════════════ */
 
         function decrease(id) {
             if (!cart[id] || cart[id] <= 0) return;
@@ -1019,12 +1223,17 @@
             document.getElementById(`qty-${id}`).textContent = cart[id];
             updateStockTag(id, p.stock);
             const btn = document.getElementById(`inc-btn-${id}`);
-            if (btn) { btn.style.opacity="1"; btn.style.pointerEvents="auto"; }
+            if (btn) {
+                btn.style.opacity = "1";
+                btn.style.pointerEvents = "auto";
+            }
             if (wasZero) refreshCardVisibility(id);
             updateCart();
         }
 
-        // ── CLEAR ──
+        /* ═══════════════════════════════════════════════════════════
+           CLEAR CART
+        ═══════════════════════════════════════════════════════════ */
 
         function clearCart() {
             for (const id in cart) {
@@ -1034,26 +1243,50 @@
                     document.getElementById(`qty-${id}`).textContent = 0;
                     updateStockTag(id, productData[id].stock);
                     const btn = document.getElementById(`inc-btn-${id}`);
-                    if (btn) { btn.style.opacity="1"; btn.style.pointerEvents="auto"; }
+                    if (btn) {
+                        btn.style.opacity = "1";
+                        btn.style.pointerEvents = "auto";
+                    }
                     refreshCardVisibility(id);
                 }
             }
             updateCart();
             showToast("Cart cleared");
+            currentHoldId = null;
+            document.getElementById("holdNumber").value = "NEW";
         }
 
-        // ── GENERATE BILL ──
+        /* ═══════════════════════════════════════════════════════════
+           GENERATE BILL
+        ═══════════════════════════════════════════════════════════ */
 
         function generateBill() {
+            const btn = document.querySelector('.bill-btn');
             const cartData = Object.entries(cart)
-                .filter(([,qty]) => qty > 0)
+                .filter(([, qty]) => qty > 0)
                 .map(([product_id, qty]) => ({ product_id, qty }));
-            if (cartData.length === 0) { showToast("Cart is empty!", "error"); return; }
 
-            fetch("{% url 'create_bill_api' %}", {
+            if (cartData.length === 0) {
+                showToast("Cart is empty!", "error");
+                return;
+            }
+
+            if (btn) {
+                btn.classList.add('loading');
+                btn.disabled = true;
+            }
+
+            fetch("{% url 'billings:create_bill_api' %}", {
                 method: "POST",
-                headers: { "Content-Type":"application/json", "X-CSRFToken":"{{ csrf_token }}" },
-                body: JSON.stringify({ cart: cartData })
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    customer_name: document.getElementById("customerName").value || "Walk-in Customer",
+                    hold_id: currentHoldId,
+                    cart: cartData
+                })
             })
             .then(r => r.json())
             .then(data => {
@@ -1061,36 +1294,64 @@
                     showToast(`Bill #${data.bill_no} — ₹${data.total_amount}`);
                     setTimeout(() => location.reload(), 1800);
                 } else {
-                    showToast(data.error, "error");
+                    showToast(data.error || "Error creating bill", "error");
+                }
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                showToast("Network error", "error");
+            })
+            .finally(() => {
+                if (btn) {
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
                 }
             });
         }
 
-        // ── SEARCH ──
+        /* ═══════════════════════════════════════════════════════════
+           SEARCH PRODUCTS
+        ═══════════════════════════════════════════════════════════ */
 
         function filterProducts() {
             const q = document.getElementById("searchInput").value.toLowerCase();
             document.querySelectorAll(".product-card").forEach(card => {
                 const id = card.dataset.id;
-                if (productData[id].stock <= 0) { card.style.display="none"; return; }
+                if (productData[id].stock <= 0) {
+                    card.style.display = "none";
+                    return;
+                }
                 card.style.display = card.dataset.name.includes(q) ? "" : "none";
             });
         }
 
-        // ── FILTER BY PRICE ──
+        /* ═══════════════════════════════════════════════════════════
+           FILTER BY PRICE
+        ═══════════════════════════════════════════════════════════ */
 
         function filterByPrice(price, btn) {
             document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
             if (btn) btn.classList.add("active");
             document.querySelectorAll(".product-card").forEach(card => {
                 const id = card.dataset.id;
-                if (productData[id].stock <= 0) { card.style.display="none"; return; }
+                if (productData[id].stock <= 0) {
+                    card.style.display = "none";
+                    return;
+                }
                 const p = parseFloat(card.dataset.price);
-                card.style.display = (price === "all" || p === price) ? "" : "none";
+                const fixedPrices = [10, 15, 20, 25, 30, 35, 40];
+                const shouldShow = price === "all"
+                    ? true
+                    : price === "others"
+                        ? !fixedPrices.includes(p)
+                        : p === price;
+                card.style.display = shouldShow ? "" : "none";
             });
         }
 
-        // ── CART TOGGLE ──
+        /* ═══════════════════════════════════════════════════════════
+           CART TOGGLE (Mobile)
+        ═══════════════════════════════════════════════════════════ */
 
         function toggleCart() {
             if (window.innerWidth > 900) return;
@@ -1104,7 +1365,275 @@
             }
         }
 
-        // ── INIT ──
+        /* ═══════════════════════════════════════════════════════════
+           HOLD BILL - SIMPLE FIX
+           If currentHoldId exists → UPDATE the existing bill
+           If currentHoldId is null → CREATE new bill
+        ═══════════════════════════════════════════════════════════ */
+
+        function holdBill() {
+            const cartData = Object.entries(cart).filter(([, qty]) => qty > 0);
+
+            if (cartData.length === 0) {
+                showToast("Cart is empty!", "error");
+                return;
+            }
+
+            const customerName = document.getElementById("customerName").value || "Walk-in Customer";
+
+            // ╔════════════════════════════════════════════════════════════╗
+            // ║ IF RECALLING EXISTING BILL → UPDATE IT                    ║
+            // ╚════════════════════════════════════════════════════════════╝
+            if (currentHoldId) {
+                // Convert cart to array format for update
+                const cartArray = cartData.map(([product_id, qty]) => ({
+                    product_id: parseInt(product_id),
+                    qty: parseInt(qty)
+                }));
+
+                fetch(`/api/update-hold-bill/${currentHoldId}/`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify({
+                        customer_name: customerName,
+                        cart: cartArray
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast("Bill updated successfully!");
+                        for (const id in cart) cart[id] = 0;
+                        updateCart();
+                        document.getElementById("customerName").value = "";
+                        document.getElementById("holdNumber").value = "NEW";
+                        currentHoldId = null;
+                    } else {
+                        showToast(data.error || "Error updating bill", "error");
+                    }
+                })
+                .catch(err => {
+                    console.error("Error:", err);
+                    showToast("Network error", "error");
+                });
+                return;
+            }
+
+            // ╔════════════════════════════════════════════════════════════╗
+            // ║ IF FRESH CART → CREATE NEW BILL                           ║
+            // ╚════════════════════════════════════════════════════════════╝
+            fetch("{% url 'billings:hold_bill_api' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    customer_name: customerName,
+                    cart: Object.fromEntries(cartData)
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast("Bill held successfully!");
+                    for (const id in cart) cart[id] = 0;
+                    updateCart();
+                    document.getElementById("customerName").value = "";
+                    document.getElementById("holdNumber").value = "NEW";
+                    currentHoldId = null;
+                } else {
+                    showToast(data.error || "Error holding bill", "error");
+                }
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                showToast("Network error", "error");
+            });
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           LOAD HELD BILLS
+        ═══════════════════════════════════════════════════════════ */
+
+        function loadHeldBills() {
+            document.getElementById("heldBillModal").style.display = "block";
+            fetch("{% url 'billings:held_bills_api' %}")
+            .then(res => res.json())
+            .then(data => {
+                let html = "";
+                if (data.bills && data.bills.length > 0) {
+                    data.bills.forEach(bill => {
+                        html += `
+                        <tr>
+                            <td>${bill.hold_number}</td>
+                            <td>${bill.customer_name}</td>
+                            <td>₹ ${bill.grand_total.toFixed(2)}</td>
+                            <td>${bill.date}</td>
+                            <td>
+                                <button class="recallBtn" onclick="recallBill(${bill.id})"><i class="fas fa-arrow-left"></i> Recall</button>
+                                <button class="deleteBtn" onclick="deleteHoldBill(${bill.id})"><i class="fas fa-trash"></i> Delete</button>
+                            </td>
+                        </tr>`;
+                    });
+                } else {
+                    html = '<tr><td colspan="5" style="text-align:center;">No held bills</td></tr>';
+                }
+                document.getElementById("heldBillTable").innerHTML = html;
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                showToast("Error loading bills", "error");
+            });
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           CLOSE MODAL
+        ═══════════════════════════════════════════════════════════ */
+
+        function closeHeldBills() {
+            document.getElementById("heldBillModal").style.display = "none";
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           SEARCH HELD BILL
+        ═══════════════════════════════════════════════════════════ */
+
+        function searchHoldBill() {
+            let q = document.getElementById("searchHold").value;
+            fetch("{% url 'billings:search_hold_bill_api' %}?q=" + encodeURIComponent(q))
+            .then(res => res.json())
+            .then(data => {
+                let html = "";
+                if (data.bills && data.bills.length > 0) {
+                    data.bills.forEach(bill => {
+                        html += `
+                        <tr>
+                            <td>${bill.hold_number}</td>
+                            <td>${bill.customer_name}</td>
+                            <td>₹ ${bill.grand_total.toFixed(2)}</td>
+                            <td>${bill.date}</td>
+                            <td>
+                                <button class="recallBtn" onclick="recallBill(${bill.id})"><i class="fas fa-arrow-left"></i> Recall</button>
+                                <button class="deleteBtn" onclick="deleteHoldBill(${bill.id})"><i class="fas fa-trash"></i> Delete</button>
+                            </td>
+                        </tr>`;
+                    });
+                } else {
+                    html = '<tr><td colspan="5" style="text-align:center;">No results</td></tr>';
+                }
+                document.getElementById("heldBillTable").innerHTML = html;
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                showToast("Search error", "error");
+            });
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           RECALL HELD BILL - FIXED TO STORE hold_id
+        ═══════════════════════════════════════════════════════════ */
+
+        function recallBill(holdId) {
+            fetch(`/api/recall-bill/${holdId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    showToast("Unable to recall bill", "error");
+                    return;
+                }
+
+                // ╔════════════════════════════════════════════════════════════╗
+                // ║ STORE hold_id (use the passed holdId) FOR ADDING ITEMS    ║
+                // ╚════════════════════════════════════════════════════════════╝
+                currentHoldId = holdId;
+                
+                document.getElementById("customerName").value = data.customer_name;
+                document.getElementById("holdNumber").value = data.hold_number;
+
+                // Clear cart
+                for (const id in cart) cart[id] = 0;
+
+                // Populate cart
+                if (data.cart && Array.isArray(data.cart)) {
+                    data.cart.forEach(item => {
+                        const id = item.product_id.toString();
+                        const qty = parseInt(item.qty);
+                        cart[id] = qty;
+                        
+                        const qtyEl = document.getElementById(`qty-${id}`);
+                        if (qtyEl) qtyEl.textContent = qty;
+                        
+                        if (productData[id]) {
+                            productData[id].stock -= qty;
+                            updateStockTag(id, productData[id].stock);
+                        }
+                    });
+                }
+
+                updateCart();
+                closeHeldBills();
+                showToast("Bill recalled! Add items to update it.");
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                showToast("Error recalling bill", "error");
+            });
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           DELETE HELD BILL
+        ═══════════════════════════════════════════════════════════ */
+
+        function deleteHoldBill(id) {
+            if (!confirm("Delete this held bill?")) {
+                return;
+            }
+            fetch(`/api/delete-hold-bill/${id}/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast("Bill deleted!");
+                    loadHeldBills();
+                } else {
+                    showToast(data.error || "Error deleting bill", "error");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showToast("Error deleting bill", "error");
+            });
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           MODAL CLOSE HANDLERS
+        ═══════════════════════════════════════════════════════════ */
+
+        window.onclick = function (event) {
+            let modal = document.getElementById("heldBillModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                closeHeldBills();
+            }
+        });
+
+        /* ═══════════════════════════════════════════════════════════
+           INITIALIZE
+        ═══════════════════════════════════════════════════════════ */
+
         updateCart();
 
     </script>

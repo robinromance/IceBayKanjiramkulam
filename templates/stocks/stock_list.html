@@ -187,6 +187,34 @@
             transform: translateY(-2px);
         }
 
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            background: var(--blue-accent);
+            color: var(--white);
+            border-radius: var(--radius-sm);
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 10px 22px rgba(26, 110, 245, 0.18);
+        }
+
+        .action-btn:hover {
+            background: #1557c1;
+            transform: translateY(-2px);
+        }
+
         /* ===== STATUS BAR ===== */
 
         .status-bar {
@@ -567,15 +595,22 @@
                         <h1 class="brand-name">ICE BAY</h1>
                         <p class="brand-sub">Adimalathura · Live Inventory</p>
                     </div>
-                    <a href="{% url "billing_page" %}" class="home-btn">
-                        <i class="fas fa-house"></i>
-                        Back to Home
-                    </a>
+                    <div class="header-actions">
+                        <a href="{% url "billings:billing_page" %}" class="home-btn">
+                            <i class="fas fa-house"></i>
+                            Back to Home
+                        </a>
+                        <a href="{% url 'billings:add_stock_page' %}" class="action-btn">
+                            <i class="fas fa-plus-circle"></i>
+                            Add Stock
+                        </a>
+                    </div>
                 </div>
                 <div class="status-bar">
                     <span class="status-dot"></span>
-                    <span class="status-text">Live Stock — {{ stocks|length }} product{{ stocks|length|pluralize }} tracked</span>
+                    <span class="status-text">{{ page_title|default:"Live Stock" }} — {{ stocks|length }} product{{ stocks|length|pluralize }} tracked</span>
                 </div>
+
             </div>
 
             <!-- SEARCH -->
@@ -685,6 +720,10 @@
                             <div class="t-label">Total Products</div>
                             <div class="t-value">{{ stocks|length }}</div>
                         </div>
+                        <div>
+                            <div class="t-label">Stock Value</div>
+                            <div class="t-value">₹{{ total_stock_value }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -703,25 +742,6 @@
             document.querySelectorAll(".stock-row").forEach(row => {
                 row.style.display = row.dataset.name.includes(query) ? "" : "none";
             });
-        });
-
-        // ===== COUNT SUMMARY BADGES =====
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const rows = document.querySelectorAll(".stock-row");
-            let low = 0, critical = 0;
-
-            rows.forEach(row => {
-                const badge = row.querySelector(".badge");
-                if (badge.classList.contains("critical")) critical++;
-                else if (badge.classList.contains("low")) low++;
-            });
-
-            document.querySelector(".s-low-val").textContent  = low;
-            document.querySelector(".s-crit-val").textContent = critical;
-
-            const goodCard = document.querySelector(".s-good .s-value");
-            goodCard.textContent = rows.length - low - critical;
         });
 
     </script>

@@ -8,11 +8,22 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('products', '0001_initial'),
-    ]
+    dependencies = []
 
     operations = [
+        migrations.CreateModel(
+            name='Product',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=100, unique=True)),
+                ('category', models.CharField(blank=True, default='', max_length=80)),
+                ('price', models.PositiveIntegerField()),
+                ('is_active', models.BooleanField(default=True)),
+            ],
+            options={
+                'db_table': 'products_product',
+            },
+        ),
         migrations.CreateModel(
             name='Bill',
             fields=[
@@ -29,7 +40,7 @@ class Migration(migrations.Migration):
                 ('quantity', models.IntegerField()),
                 ('price', models.DecimalField(decimal_places=2, max_digits=8)),
                 ('bill', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='billings.bill')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.product')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='billings.product')),
             ],
         ),
     ]

@@ -8,13 +8,12 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('billings', '0003_alter_billitem_quantity'),
-        ('products', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='billitem',
             name='product',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bill_items', to='products.product'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bill_items', to='billings.product'),
         ),
     ]
